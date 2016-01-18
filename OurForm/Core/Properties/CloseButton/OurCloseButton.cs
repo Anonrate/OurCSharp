@@ -24,7 +24,7 @@ namespace OurCSharp.OurForm.Core.Properties.CloseButton
     using OurCSharp.OurForm.Core.Properties.CloseButton.SubProperties;
 
     // TODO Double check that this is accessable though being internal.
-    internal class OurCloseButton : IOurFormButtonBase
+    public class OurCloseButton : IOurFormButtonBase
     {
         #region Fields
         private readonly OurForm _ourForm;

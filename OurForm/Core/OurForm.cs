@@ -48,16 +48,17 @@ namespace OurCSharp.OurForm.Core
 
         private readonly Font _titleBarFont;
 
-        private Color _backColor;
-        private Color _borderTrimColor;
+        // TODO Add variable in settings
+        private Color _backColor = Color.FromArgb(255, 75, 75, 75);
+        private Color _borderTrimColor = Color.FromArgb(255, 25, 25, 25);
 
         private Rectangle _closeRect;
         private Rectangle _maximizeRect;
         private Rectangle _minimizeRect;
 
         // TODO May try to implement a different way to achieve same results as using the enums
-        private MouseAction _mouseAction;
-        private OurBounds _mouseIsOver;
+        private MouseAction _mouseAction = MouseAction.None;
+        private OurBounds _mouseIsOver = OurBounds.Client;
         #endregion
 
         #region Properties
@@ -179,14 +180,9 @@ namespace OurCSharp.OurForm.Core
         protected override bool DoubleBuffered { get { return base.DoubleBuffered; } set { } }
 
         [Category("DisabledProperties")]
-
         // TODO If this is not set automatically, first try decorating with 'DefaultValue' else assign in constructor.
         [Description("This property cannot be changed for the reason of the appearance of OurForm.")]
-        public new FormBorderStyle FormBorderStyle
-        {
-            get { return base.FormBorderStyle; }
-            private set { base.FormBorderStyle = FormBorderStyle.None; }
-        }
+        public new FormBorderStyle FormBorderStyle { get; } = FormBorderStyle.None;
 
         [Category("DisabledProperties")]
         [Description("Please see 'CloseButton', 'MaximizeButton' and 'MinimizeButton' to achieve duplicate results.")]
@@ -207,7 +203,7 @@ namespace OurCSharp.OurForm.Core
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
 
         // TODO See if this shows up in the property grid even though it's internal.
-        internal OurCloseButton CloseButton { get; }
+        public OurCloseButton CloseButton { get; }
 
         [Category("OurForm")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
@@ -221,6 +217,9 @@ namespace OurCSharp.OurForm.Core
         #region Constructors
         protected OurForm()
         {
+            base.FormBorderStyle = FormBorderStyle.None;
+            base.Text = "OurForm";
+            this.BorderColor = Color.FromArgb(255, 0, 0, 0);
             this._titleBarFont = new Font("Consolas", 10F, FontStyle.Regular);
 
             /*
@@ -231,7 +230,7 @@ namespace OurCSharp.OurForm.Core
 
             // TODO Make sure everthing is set accordingly, else modify it to as it was previously.
 
-            this.Padding = new Padding(43, 25, 7, 7);
+            base.Padding = new Padding(43, 25, 7, 7);
 
             this.CloseButton = new OurCloseButton(this);
             this.MaximizeButton = new OurMaximizeButton(this);
@@ -242,6 +241,7 @@ namespace OurCSharp.OurForm.Core
             this._minimizeRect = new Rectangle(this.Width - 78, 0, 24, 24);
 
             // TODO Not sure if should Invalidate here or just in the 'OnCreateControl'..
+            this.Invalidate();
         }
         #endregion
 
@@ -424,6 +424,7 @@ namespace OurCSharp.OurForm.Core
             ////base.OnCreateControl();
 
             this.BackColor = Color.FromArgb(255, 75, 75, 75);
+            this.BorderColor = Color.FromArgb(255, 0, 0, 0);
             this.DoubleBuffered = true;
 
             this.DockPadding.Bottom = 7;
