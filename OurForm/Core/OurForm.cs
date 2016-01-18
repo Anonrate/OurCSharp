@@ -1,14 +1,33 @@
-﻿namespace OurCSharp.OurForm.Core
+﻿// ----------------------------------------------------------------------------
+// <copyright file="OurForm.cs" company="OurCSharp">
+//     Copyright © 2016 OurCSharp
+// 
+//     This program is free software; you can redistribute it and/or modify
+//     it under the terms of the GNU General Public License as published by
+//     the Free Software Foundation; either version 2 of the License, or
+//     (at your option) any later version.
+// 
+//     This program is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU General Public License for more details.
+// </copyright>
+// ----------------------------------------------------------------------------
+
+namespace OurCSharp.OurForm.Core
 {
     using System;
-    using System.Collections.Generic;
     using System.ComponentModel;
     using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using System.Drawing.Drawing2D;
     using System.Windows.Forms;
+
+    using OurCSharp.OurForm.Core.Enums;
+    using OurCSharp.OurForm.Core.Interfaces;
+    using OurCSharp.OurForm.Core.Properties.CloseButton;
+    using OurCSharp.OurForm.Core.Properties.MaximizeButton;
+    using OurCSharp.OurForm.Core.Properties.MinimizeButton;
 
     public class OurForm : Form
     {
@@ -38,30 +57,10 @@
 
         // TODO May try to implement a different way to achieve same results as using the enums
         private MouseAction _mouseAction;
-        private MouseIsOver _mouseIsOver;
-        #endregion Fields
-
-        #region Enums
-        private enum MouseAction
-        {
-            Click,
-            Hover,
-            None
-        }
-
-        private enum MouseIsOver
-        {
-            Client,
-            CloseButton,
-            MaximizeButton,
-            MinimizeButton,
-            OffClient
-        }
-        #endregion Enums
+        private OurBounds _mouseIsOver;
+        #endregion
 
         #region Properties
-
-        #region OurProperties
         [Category("OurForm")]
         [Description("Should OurForm be Movable?")]
         public bool Movable { get; set; } = true;
@@ -78,9 +77,7 @@
             /*
              * Uses the 'base.BackColor' because the BorderColor is the BackGround and instead of handling the
              * BackColor with OnPaint event, it's more efficient and will use less resrouces.
-             */
-
-            // BUG Lets check to see if this fixes the BackColor issue we previously had.
+             */ // BUG Lets check to see if this fixes the BackColor issue we previously had.
             get { return base.BackColor; }
             set
             {
@@ -102,17 +99,8 @@
             }
         }
 
-        // TODO CloseButton
-
-        // TODO MaximizeButton
-
-        // TODO MinimizeButton
-
-        // TODO Decorate the three properties with '[DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]'
-        #endregion OurProperties
-
-        #region Overriden Properties
         [Category("OurForm")]
+
         // TODO Need to create Resource File with the Embeded.
         // TODO Decorate with 'DeffaultValue'
         // TODO May use external Lib for Images and Icons.
@@ -189,10 +177,9 @@
         [DefaultValue(true)]
         [Description("This cannot be changed for rendering and visual appearance reasons.")]
         protected override bool DoubleBuffered { get { return base.DoubleBuffered; } set { } }
-        #endregion Overriden Properties
 
-        #region Disabled Properties
         [Category("DisabledProperties")]
+
         // TODO If this is not set automatically, first try decorating with 'DefaultValue' else assign in constructor.
         [Description("This property cannot be changed for the reason of the appearance of OurForm.")]
         public new FormBorderStyle FormBorderStyle
@@ -215,9 +202,23 @@
         [Description("Please use 'MinimizeButton' to achieve duplicate results.")]
         [Obsolete("Please use 'MinimizeButton' to achieve duplicate results.")]
         public new string MinimizeBox { get; } = "Deprecated!  Read Description.";
-        #endregion Disabled Properties
-        #endregion Properties
 
+        [Category("OurForm")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+
+        // TODO See if this shows up in the property grid even though it's internal.
+        internal OurCloseButton CloseButton { get; }
+
+        [Category("OurForm")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public OurMaximizeButton MaximizeButton { get; }
+
+        [Category("OurForm")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public OurMinimizeButton MinimizeButton { get; }
+        #endregion
+
+        #region Constructors
         protected OurForm()
         {
             this._titleBarFont = new Font("Consolas", 10F, FontStyle.Regular);
@@ -232,9 +233,9 @@
 
             this.Padding = new Padding(43, 25, 7, 7);
 
-            // TODO Assign and instantiate 'CloseButton' after 'OurCloseButton' has been created.
-            // TODO Assign and instantiate 'MaximizeButton' after 'OurMaximizeButton' has been created.
-            // TODO Assign and instantiate 'MinimizeButton' after 'OurMinimizeButton' has been created.
+            this.CloseButton = new OurCloseButton(this);
+            this.MaximizeButton = new OurMaximizeButton(this);
+            this.MinimizeButton = new OurMinimizeButton(this);
 
             this._closeRect = new Rectangle(this.Width - 30, 0, 24, 24);
             this._maximizeRect = new Rectangle(this.Width - 54, 0, 24, 24);
@@ -242,10 +243,180 @@
 
             // TODO Not sure if should Invalidate here or just in the 'OnCreateControl'..
         }
+        #endregion
 
         #region Methods
+        private bool ControlBoxContains(Point p)
+        {
+            if (this.ControlBoxContains(this.CloseButton, p, this._closeRect)
+                || this.ControlBoxContains(this.MaximizeButton, p, this._maximizeRect)
+                || this.ControlBoxContains(this.MinimizeButton, p, this._minimizeRect)) {
+                    return true;
+                }
 
-        #region Overriden Events
+            this._mouseIsOver = OurBounds.Client;
+
+            if (this._mouseAction == MouseAction.Hover) { this.Invalidate(); }
+
+            this._mouseAction = MouseAction.None;
+
+            return false;
+        }
+
+        private bool ControlBoxContains(IOurFormButtonBase buttonBase, Point p, Rectangle r)
+        {
+            // Might have an issue with this...
+            if (!this.IsVisible(buttonBase)
+                || !r.Contains(p)) {
+                    return false;
+                }
+
+            this._mouseIsOver = buttonBase.ButtonBounds;
+            this._mouseAction = buttonBase.State != OurFormButtonStates.Disabled
+                                    /* 
+                                     * The extra Trenary is required otherwise when the mouse is clicked
+                                     * is the _mouseAction would always of been set to MouseAction.Hover
+                                     */
+                                    ? this._mouseAction == MouseAction.Click ? this._mouseAction : MouseAction.Hover
+                                    : MouseAction.None;
+            return true;
+        }
+
+        private bool IsVisible(IOurFormButtonBase buttonBase)
+        {
+            switch (buttonBase.State)
+            {
+                case OurFormButtonStates.Disabled:
+                case OurFormButtonStates.Shown:
+                    return true;
+                case OurFormButtonStates.Hidden:
+                    return false;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(buttonBase.State),
+                                                          buttonBase.State,
+                                                          "Something Fucked Up..");
+            }
+        }
+
+        private void PaintButtons(Graphics g, ref Pen p, ref SolidBrush sB)
+        {
+            switch (this._mouseAction)
+            {
+                case MouseAction.Click:
+                case MouseAction.Hover:
+                    this.PaintButtons(this._mouseAction, g, ref p, ref sB);
+                    break;
+                case MouseAction.None:
+                    this.PaintButton(this.CloseButton, g, ref p, ref sB, this._closeRect);
+                    this.PaintButton(this.MaximizeButton, g, ref p, ref sB, this._maximizeRect);
+                    this.PaintButton(this.MinimizeButton, g, ref p, ref sB, this._minimizeRect);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(this._mouseAction));
+            }
+        }
+
+        private void PaintButtons(MouseAction mouseAction, Graphics g, ref Pen p, ref SolidBrush sB)
+        {
+            switch (this._mouseIsOver)
+            {
+                case OurBounds.Client:
+                    throw new Exception("Something Fucked Up..");
+                case OurBounds.CloseButton:
+                    this.PaintButton(
+                                     this.CloseButton.State != OurFormButtonStates.Disabled
+                                         ? mouseAction == MouseAction.Hover
+                                               ? this.CloseButton.Hovered
+                                               : this.CloseButton.Clicked
+                                         : this.CloseButton.Disabled,
+                                     g,
+                                     ref p,
+                                     ref sB,
+                                     this._closeRect);
+                    this.PaintButton(this.MaximizeButton, g, ref p, ref sB, this._maximizeRect);
+                    this.PaintButton(this.MinimizeButton, g, ref p, ref sB, this._minimizeRect);
+                    break;
+                case OurBounds.MaximizeButton:
+                    this.PaintButton(
+                                     this.MaximizeButton.State != OurFormButtonStates.Disabled
+                                         ? mouseAction == MouseAction.Hover
+                                               ? this.MaximizeButton.Hovered
+                                               : this.MaximizeButton.Clicked
+                                         : this.MaximizeButton.Disabled,
+                                     g,
+                                     ref p,
+                                     ref sB,
+                                     this._maximizeRect);
+                    this.PaintButton(this.CloseButton, g, ref p, ref sB, this._closeRect);
+                    this.PaintButton(this.MinimizeButton, g, ref p, ref sB, this._minimizeRect);
+                    break;
+                case OurBounds.MinimizeButton:
+                    this.PaintButton(
+                                     this.MinimizeButton.State != OurFormButtonStates.Disabled
+                                         ? mouseAction == MouseAction.Hover
+                                               ? this.MinimizeButton.Hovered
+                                               : this.MinimizeButton.Clicked
+                                         : this.MinimizeButton.Disabled,
+                                     g,
+                                     ref p,
+                                     ref sB,
+                                     this._minimizeRect);
+                    this.PaintButton(this.CloseButton, g, ref p, ref sB, this._closeRect);
+                    this.PaintButton(this.MaximizeButton, g, ref p, ref sB, this._maximizeRect);
+                    break;
+                case OurBounds.OffClient:
+                    this.PaintButton(this.CloseButton, g, ref p, ref sB, this._closeRect);
+                    this.PaintButton(this.MaximizeButton, g, ref p, ref sB, this._maximizeRect);
+                    this.PaintButton(this.MinimizeButton, g, ref p, ref sB, this._minimizeRect);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(this._mouseIsOver),
+                                                          this._mouseIsOver,
+                                                          "Something Fucked Up..");
+            }
+        }
+
+        private void PaintButton(IOurFormButtonBase buttonBase, Graphics g, ref Pen p, ref SolidBrush sB, Rectangle r)
+            =>
+                this.PaintButton(
+                                 buttonBase.State != OurFormButtonStates.Disabled
+                                     ? buttonBase.Normal
+                                     : buttonBase.Disabled,
+                                 g,
+                                 ref p,
+                                 ref sB,
+                                 r);
+
+        private void PaintButton(IOurFormButtonDesigner buttonDesigner,
+                                 Graphics g,
+                                 ref Pen p,
+                                 ref SolidBrush sB,
+                                 Rectangle r)
+        {
+            if (buttonDesigner.DrawBox)
+            {
+                sB.Color = buttonDesigner.BoxColor;
+                g.FillRectangle(sB, r.X + 1, r.Y + 1, r.Width - 2, r.Height - 2);
+            }
+
+            if (buttonDesigner.DrawBoxBorder)
+            {
+                p.Color = buttonDesigner.BoxBorderColor;
+                g.FillRectangle(sB, r.X + 1, r.Y + 1, r.Width - 2, r.Height - 2);
+            }
+
+            if (buttonDesigner.DrawCircle)
+            {
+                sB.Color = buttonDesigner.CircleColor;
+                g.FillEllipse(sB, r.X + 7, r.Y + 7, r.Width - 14, r.Height - 14);
+            }
+
+            if (!buttonDesigner.DrawCircleBorder) { return; }
+
+            p.Color = buttonDesigner.CircleBorderColor;
+            g.DrawEllipse(p, r.X + 7, r.Y + 7, r.Width - 14, r.Height - 14);
+        }
+
         protected override void OnCreateControl()
         {
             // TODO See if anything noticable happens if this is not called.
@@ -267,9 +438,9 @@
 
             // TODO This may not worrk accordingly.
             this.MinimumSize =
-                (new Size(
+                new Size(
                     (int)this.CreateGraphics().MeasureString(this.Text = "OurForm", this._titleBarFont).Width + 116,
-                    52));
+                    52);
 
             // TODO If any filckering occurs, set this in the Constructor.
             this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
@@ -277,11 +448,184 @@
             // TODO Not sure if we should Invalidate here, just in the Constructor or both..
             this.Invalidate();
         }
-        #endregion Overriden Events
 
-        #region OurMethods
+        protected override void OnMouseClick(MouseEventArgs e)
+        {
+            base.OnMouseClick(e);
+            switch (this._mouseIsOver)
+            {
+                case OurBounds.Client: // TODO May need to handle 'Focus' manually.
+                    break;
+                case OurBounds.CloseButton:
+                    Application.ExitThread();
+                    break;
+                case OurBounds.MaximizeButton:
+                    this.WindowState = this.WindowState == FormWindowState.Maximized
+                                           ? FormWindowState.Normal
+                                           : FormWindowState.Maximized;
+                    break;
+                case OurBounds.MinimizeButton:
+                    this.WindowState = FormWindowState.Minimized;
+                    break;
+                case OurBounds.OffClient:
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(this._mouseIsOver),
+                                                          this._mouseIsOver,
+                                                          "Something Fucked Up..");
+            }
+        }
 
-        #endregion OurMethods
-        #endregion Methods
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            base.OnMouseDown(e);
+            switch (this._mouseIsOver)
+            {
+                case OurBounds.CloseButton:
+                case OurBounds.MaximizeButton:
+                case OurBounds.MinimizeButton:
+                    this._mouseAction = MouseAction.Click;
+                    this.Invalidate();
+                    break;
+                case OurBounds.Client:
+                case OurBounds.OffClient:
+                    this._mouseAction = MouseAction.None;
+                    this.Invalidate();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(this._mouseIsOver),
+                                                          this._mouseIsOver,
+                                                          "Something Fucked Up..");
+            }
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+
+            this._mouseIsOver = OurBounds.OffClient;
+            this._mouseAction = MouseAction.None;
+
+            this.Invalidate();
+        }
+
+        protected override void OnMouseMove(MouseEventArgs e)
+        {
+            base.OnMouseMove(e);
+
+            if (this._mouseAction == MouseAction.Click) { return; }
+            if (this.ControlBoxContains(e.Location)) { this.Invalidate(); }
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            base.OnMouseUp(e);
+
+            switch (this._mouseAction)
+            {
+                case MouseAction.Click:
+                case MouseAction.Hover:
+                    this._mouseAction = MouseAction.None;
+                    this.Invalidate();
+                    break;
+                case MouseAction.None:
+                    this.Invalidate();
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(this._mouseAction),
+                                                          this._mouseAction,
+                                                          "Something Fucked Up..");
+            }
+        }
+
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            base.OnPaint(e);
+
+            var g = e.Graphics;
+
+            g.SmoothingMode = SmoothingMode.AntiAlias;
+
+            var p = new Pen(this._borderTrimColor);
+            var b = new SolidBrush(this.BorderColor);
+
+            var clientRect = this.ClientRectangle;
+
+            ////g.FillRectangle(b, clientRect);
+
+            clientRect.Width--;
+            clientRect.Height--;
+
+            g.DrawRectangle(p, clientRect);
+
+            clientRect.X += 6;
+            clientRect.Y += 24;
+            clientRect.Width -= 12;
+            clientRect.Height -= 30;
+
+            b.Color = this.BackColor;
+            g.FillRectangle(b, clientRect);
+
+            g.DrawRectangle(p, clientRect);
+
+            b.Color = this.BorderColor;
+
+            g.FillRectangle(b, 5, 5, 38, 38);
+
+            this.PaintButtons(g, ref p, ref b);
+
+            g.DrawIcon(this.Icon, 6, 6);
+
+            b.Color = this.ForeColor;
+            g.DrawString(this.Text, new Font("Consolas", 10F, FontStyle.Regular), b, 42, 7);
+        }
+
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+            this._closeRect.X = this.Width - 24;
+            this._maximizeRect.X = this.Width - 48;
+            this._minimizeRect.X = this.Width - 72;
+
+            this.Invalidate();
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);
+            switch (m.Msg)
+            {
+                case WM_NCHITTEST:
+                    var p = this.PointToClient(new Point(m.LParam.ToInt32()));
+
+                    if (m.Result == (IntPtr)HTCLIENT
+                        && !this.ControlBoxContains(p))
+                    {
+                        m.Result =
+                            (IntPtr)
+                            (this.Sizable
+                                 ? p.X <= 6
+                                       ? p.Y <= 6 ? HTTOPLEFT : p.Y >= this.Height - 7 ? HTBOTTOMLEFT : HTLEFT
+                                       : p.X >= this.Width - 7
+                                             ? p.Y <= 6 ? HTTOPRIGHT : p.Y >= this.Height - 7 ? HTBOTTOMRIGHT : HTRIGHT
+                                             : p.Y <= 6
+                                                   ? HTTOP
+                                                   : p.Y >= this.Height - 7
+                                                         ? HTBOTTOM
+                                                         : p.Y <= 24 && this.Movable ? HTCAPTION : HTCLIENT
+                                 : this.Movable && p.Y <= 24 ? HTCAPTION : HTCLIENT);
+                    }
+
+                    break;
+            }
+        }
+        #endregion
+
+        private enum MouseAction
+        {
+            Click,
+            Hover,
+            None
+        }
     }
 }

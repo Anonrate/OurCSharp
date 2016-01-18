@@ -1,0 +1,371 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)"
+              GeneratedClassNamespace="OurCSharp.OurForm.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="ClsBttnNrmlDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnNrmlDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnNrmlDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ClsBttnNrmlDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ClsBttnNrmlCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">Red</Value>
+    </Setting>
+    <Setting Name="ClsBttnNrmlCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="ClsBttnNrmlBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">Red</Value>
+    </Setting>
+    <Setting Name="ClsBttnNrmlBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="ClsBttnHvrdDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnHvrdDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnHvrdDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnHvrdDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnHvrdCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">150, 0, 0</Value>
+    </Setting>
+    <Setting Name="ClsBttnHvrdCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="ClsBttnHvrdBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">150, 0, 0</Value>
+    </Setting>
+    <Setting Name="ClsBttnHvrdBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="ClsBttnClckdDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnClckdDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnClckdDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnClckdDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnClckdCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 0, 0</Value>
+    </Setting>
+    <Setting Name="ClsBttnClckdCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="ClsBttnClckdBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 0, 0</Value>
+    </Setting>
+    <Setting Name="ClsBttnClckdBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="ClsBttnDsbldDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnDsbldDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnDsbldDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnDsbldDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnDsbldCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 0, 0</Value>
+    </Setting>
+    <Setting Name="ClsBttnDsbldCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="ClsBttnDsbldBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 0, 0</Value>
+    </Setting>
+    <Setting Name="ClsBttnDsbldBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MxmzBttnNrmlDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnNrmlDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnNrmlDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MxmzBttnNrmlDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MxmzBttnNrmlCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="MxmzBttnNrmlCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MxmzBttnNrmlBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="MxmzBttnNrmlBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MxmzBttnHvrdDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnHvrdDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnHvrdDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnHvrdDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnHvrdCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">150, 150, 150</Value>
+    </Setting>
+    <Setting Name="MxmzBttnHvrdCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MxmzBttnHvrdBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">150, 150, 150</Value>
+    </Setting>
+    <Setting Name="MxmzBttnHvrdBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MxmzBttnClckdDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnClckdDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnClckdDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnClckdDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnClckdCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 100, 100</Value>
+    </Setting>
+    <Setting Name="MxmzBttnClckdCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MxmzBttnClckdBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 100, 100</Value>
+    </Setting>
+    <Setting Name="MxmzBttnClckdBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MxmzBttnDsbldDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnDsbldDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnDsbldDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnDsbldDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnDsbldCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 100, 100</Value>
+    </Setting>
+    <Setting Name="MxmzBttnDsbldCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MxmzBttnDsbldBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 100, 100</Value>
+    </Setting>
+    <Setting Name="MxmzBttnDsbldBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MnmzBttnNrmlDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnNrmlDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnNrmlDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MnmzBttnNrmlDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MnmzBttnNrmlCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="MnmzBttnNrmlCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MnmzBttnNrmlBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">White</Value>
+    </Setting>
+    <Setting Name="MnmzBttnNrmlBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MnmzBttnHvrdDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnHvrdDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnHvrdDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnHvrdDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnHvrdCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">150, 150, 150</Value>
+    </Setting>
+    <Setting Name="MnmzBttnHvrdCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MnmzBttnHvrdBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">150, 150, 150</Value>
+    </Setting>
+    <Setting Name="MnmzBttnHvrdBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MnmzBttnClckdDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnClckdDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnClckdDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnClckdDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnClckdCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 100, 100</Value>
+    </Setting>
+    <Setting Name="MnmzBttnClckdCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MnmzBttnClckdBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 100, 100</Value>
+    </Setting>
+    <Setting Name="MnmzBttnClckdBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MnmzBttnDsbldDrwCrcl" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnDsbldDrwCrclBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnDsbldDrwBx" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnDsbldDrwBxBrdr" Type="System.Boolean" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnDsbldCrclClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 100, 100</Value>
+    </Setting>
+    <Setting Name="MnmzBttnDsbldCrclBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="MnmzBttnDsbldBxClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">100, 100, 100</Value>
+    </Setting>
+    <Setting Name="MnmzBttnDsbldBxBrdrClr" Type="System.Drawing.Color" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="ClsBrnNrmlCrclBrdrClr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">75, 75, 75</Value>
+    </Setting>
+    <Setting Name="ClsBttnNrmlDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ClsBttnNrmlDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="ClsBttnHvrdDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnHvrdDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnClckdDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnClckdDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnDsbldDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="ClsBttnDsbldDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnNrmlDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MxmzBttnNrmlDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MxmzBttnHvrdDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnHvrdDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnClckdDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnClckdDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnDsbldDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MxmzBttnDsbldDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnNrmlDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MnmzBttnNrmlDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MnmzBttnHvrdDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnHvrdDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnClckdDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnClckdDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnDsbldDrBx" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="MnmzBttnDsbldDrBxBrdr" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

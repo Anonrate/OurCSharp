@@ -21,11 +21,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 
-[assembly: AssemblyTitle("LibOurForm")]
-[assembly: AssemblyDescription("Extends the default WinForm making it Ours.")]
+[assembly: AssemblyTitle("LibOurUtils")]
+[assembly: AssemblyDescription("Utilities to be used with the OurCSharp Project.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("OurCSharp")]
-[assembly: AssemblyProduct("OurForm")]
+[assembly: AssemblyProduct("OurUtils")]
 [assembly: AssemblyCopyright("Copyright © OurCSharp 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -38,7 +38,7 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 
-[assembly: Guid("299a12fd-039b-4826-ba81-86346a71164a")]
+[assembly: Guid("18d4aa23-3540-4e04-bb68-701e072c3857")]
 
 // Version information for an assembly consists of the following four values:
 //

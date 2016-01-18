@@ -43,11 +43,49 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Core\Enums\OurBounds.cs" />
+    <Compile Include="Core\Enums\OurFormButtonStates.cs" />
+    <Compile Include="Core\Interfaces\IOurFormButtonBase.cs" />
+    <Compile Include="Core\Interfaces\IOurFormButtonDesigner.cs" />
     <Compile Include="Core\OurForm.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Core\Properties\CloseButton\OurCloseButton.cs" />
+    <Compile Include="Core\Properties\CloseButton\SubProperties\OurCloseButtonClicked.cs" />
+    <Compile Include="Core\Properties\CloseButton\SubProperties\OurCloseButtonDisabled.cs" />
+    <Compile Include="Core\Properties\CloseButton\SubProperties\OurCloseButtonHovered.cs" />
+    <Compile Include="Core\Properties\CloseButton\SubProperties\OurCloseButtonNormal.cs" />
+    <Compile Include="Core\Properties\MaximizeButton\OurMaximizeButton.cs" />
+    <Compile Include="Core\Properties\MaximizeButton\SubProperties\OurMaximizeButtonClicked.cs" />
+    <Compile Include="Core\Properties\MaximizeButton\SubProperties\OurMaximizeButtonDisabled.cs" />
+    <Compile Include="Core\Properties\MaximizeButton\SubProperties\OurMaximizeButtonHovered.cs" />
+    <Compile Include="Core\Properties\MaximizeButton\SubProperties\OurMaximizeButtonNormal.cs" />
+    <Compile Include="Core\Properties\MinimizeButton\OurMinimizeButton.cs" />
+    <Compile Include="Core\Properties\MinimizeButton\SubProperties\OurMinimizeButtonClicked.cs" />
+    <Compile Include="Core\Properties\MinimizeButton\SubProperties\OurMinimizeButtonDisabled.cs" />
+    <Compile Include="Core\Properties\MinimizeButton\SubProperties\OurMinimizeButtonHovered.cs" />
+    <Compile Include="Core\Properties\MinimizeButton\SubProperties\OurMinimizeButtonNormal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\OurUtils\OurUtils.csproj">
+      <Project>{18d4aa23-3540-4e04-bb68-701e072c3857}</Project>
+      <Name>OurUtils</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
