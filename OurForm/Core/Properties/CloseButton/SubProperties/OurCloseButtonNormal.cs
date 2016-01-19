@@ -28,14 +28,14 @@ namespace OurCSharp.OurForm.Core.Properties.CloseButton.SubProperties
     {
         #region Fields
         private readonly OurForm _ourForm;
+
         private Color _boxBorderColor = Settings.Default.ClsBttnNrmlBxBrdrClr;
         private Color _boxColor = Settings.Default.ClsBttnNrmlBxClr;
         private Color _circleBorderColor = Settings.Default.ClsBttnNrmlCrclBrdrClr;
-
         private Color _circleColor = Settings.Default.ClsBttnNrmlBxClr;
+
         private bool _drawBox = Settings.Default.ClsBttnNrmlDrwBx;
         private bool _drawBoxBorder = Settings.Default.ClsBttnNrmlDrwBx;
-
         private bool _drawCircle = Settings.Default.ClsBttnNrmlDrwCrcl;
         private bool _drawCircleBorder = Settings.Default.ClsBttnNrmlDrwCrclBrdr;
         #endregion
@@ -89,7 +89,7 @@ namespace OurCSharp.OurForm.Core.Properties.CloseButton.SubProperties
             }
         }
 
-        [DefaultValue(typeof(Color), "255, 255, 0, 0")]
+        [DefaultValue(typeof(Color), "Red")]
         [Description("Color of the Circle on OurForm.")]
         public Color CircleColor
         {
@@ -113,7 +113,7 @@ namespace OurCSharp.OurForm.Core.Properties.CloseButton.SubProperties
             }
         }
 
-        [DefaultValue(typeof(Color), "255, 255, 0, 0")]
+        [DefaultValue(typeof(Color), "Red")]
         [Description("Color of the Box on OurForm.")]
         public Color BoxColor
         {

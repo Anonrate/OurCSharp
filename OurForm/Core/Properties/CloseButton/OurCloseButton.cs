@@ -23,7 +23,6 @@ namespace OurCSharp.OurForm.Core.Properties.CloseButton
     using OurCSharp.OurForm.Core.Interfaces;
     using OurCSharp.OurForm.Core.Properties.CloseButton.SubProperties;
 
-    // TODO Double check that this is accessable though being internal.
     public class OurCloseButton : IOurFormButtonBase
     {
         #region Fields
@@ -33,6 +32,8 @@ namespace OurCSharp.OurForm.Core.Properties.CloseButton
         #endregion
 
         #region Properties
+        [DefaultValue(typeof(OurFormButtonStates), "Shown")]
+        [Description("Should this button be, 'Disabled', 'Hidden' or 'Shown'?")]
         public OurFormButtonStates State
         {
             get { return this._state; }
@@ -46,12 +47,16 @@ namespace OurCSharp.OurForm.Core.Properties.CloseButton
         [Browsable(false)]
         public OurBounds ButtonBounds { get; } = OurBounds.CloseButton;
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurFormButtonDesigner Normal { get; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurFormButtonDesigner Hovered { get; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurFormButtonDesigner Clicked { get; }
 
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurFormButtonDesigner Disabled { get; }
         #endregion
 

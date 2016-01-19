@@ -28,14 +28,14 @@ namespace OurCSharp.OurForm.Core.Properties.MinimizeButton.SubProperties
     {
         #region Fields
         private readonly OurForm _ourForm;
+
         private Color _boxBorderColor = Settings.Default.MnmzBttnDsbldBxBrdrClr;
         private Color _boxColor = Settings.Default.MnmzBttnDsbldBxClr;
         private Color _circleBorderColor = Settings.Default.MnmzBttnDsbldCrclBrdrClr;
-
         private Color _circleColor = Settings.Default.MnmzBttnDsbldBxClr;
+
         private bool _drawBox = Settings.Default.MnmzBttnDsbldDrwBx;
         private bool _drawBoxBorder = Settings.Default.MnmzBttnDsbldDrwBx;
-
         private bool _drawCircle = Settings.Default.MnmzBttnDsbldDrwCrcl;
         private bool _drawCircleBorder = Settings.Default.MnmzBttnDsbldDrwCrclBrdr;
         #endregion

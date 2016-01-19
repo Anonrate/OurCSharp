@@ -28,14 +28,14 @@ namespace OurCSharp.OurForm.Core.Properties.MaximizeButton.SubProperties
     {
         #region Fields
         private readonly OurForm _ourForm;
+
         private Color _boxBorderColor = Settings.Default.MxmzBttnNrmlBxBrdrClr;
         private Color _boxColor = Settings.Default.MxmzBttnNrmlBxClr;
         private Color _circleBorderColor = Settings.Default.MxmzBttnNrmlCrclBrdrClr;
-
         private Color _circleColor = Settings.Default.MxmzBttnNrmlBxClr;
+
         private bool _drawBox = Settings.Default.MxmzBttnNrmlDrwBx;
         private bool _drawBoxBorder = Settings.Default.MxmzBttnNrmlDrwBx;
-
         private bool _drawCircle = Settings.Default.MxmzBttnNrmlDrwCrcl;
         private bool _drawCircleBorder = Settings.Default.MxmzBttnNrmlDrwCrclBrdr;
         #endregion
@@ -89,7 +89,7 @@ namespace OurCSharp.OurForm.Core.Properties.MaximizeButton.SubProperties
             }
         }
 
-        [DefaultValue(typeof(Color), "255, 255, 255, 255")]
+        [DefaultValue(typeof(Color), "White")]
         [Description("Color of the Circle on OurForm.")]
         public Color CircleColor
         {
@@ -113,7 +113,7 @@ namespace OurCSharp.OurForm.Core.Properties.MaximizeButton.SubProperties
             }
         }
 
-        [DefaultValue(typeof(Color), "255, 255, 255, 255")]
+        [DefaultValue(typeof(Color), "White")]
         [Description("Color of the Box on OurForm.")]
         public Color BoxColor
         {

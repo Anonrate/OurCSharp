@@ -49,7 +49,8 @@ namespace OurCSharp.OurForm.Core
         private readonly Font _titleBarFont;
 
         // TODO Add variable in settings
-        private Color _backColor = Color.FromArgb(255, 75, 75, 75);
+        ////private Color _backColor = Color.FromArgb(255, 75, 75, 75);
+        private Color _borderColor = Color.Black;
         private Color _borderTrimColor = Color.FromArgb(255, 25, 25, 25);
 
         private Rectangle _closeRect;
@@ -71,18 +72,15 @@ namespace OurCSharp.OurForm.Core
         public bool Sizable { get; set; } = true;
 
         [Category("OurForm")]
-        [DefaultValue(typeof(Color), "255, 0, 0, 0")]
+        [DefaultValue(typeof(Color), "Black")]
         [Description("Color of the Border around OurForm.")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Color BorderColor
         {
-            /*
-             * Uses the 'base.BackColor' because the BorderColor is the BackGround and instead of handling the
-             * BackColor with OnPaint event, it's more efficient and will use less resrouces.
-             */ // BUG Lets check to see if this fixes the BackColor issue we previously had.
-            get { return base.BackColor; }
+            get { return this._borderColor; }
             set
             {
-                base.BackColor = value;
+                this._borderColor = value;
                 this.Invalidate();
             }
         }
@@ -120,18 +118,19 @@ namespace OurCSharp.OurForm.Core
         [Category("OurForm")]
         [DefaultValue(typeof(Color), "255, 75, 75, 75")]
         [Description("The background Color of OurForm.")]
-        public override Color BackColor
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public sealed override Color BackColor
         {
-            get { return this._backColor; }
+            get { return base.BackColor; }
             set
             {
-                this._backColor = value;
+                base.BackColor = value;
                 this.Invalidate();
             }
         }
 
         [Category("OurForm")]
-        [DefaultValue(typeof(Color), "255, 255, 255, 255")]
+        [DefaultValue(typeof(Color), "White")]
         [Description("The foreground Color of OurForm.")]
         public override Color ForeColor
         {
@@ -165,6 +164,7 @@ namespace OurCSharp.OurForm.Core
         [Category("OurForm")]
         [DefaultValue("OurForm")]
         [Description("Text displayed in the title bar of OurForm.")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public override string Text
         {
             get { return base.Text; }
@@ -180,6 +180,7 @@ namespace OurCSharp.OurForm.Core
         protected override bool DoubleBuffered { get { return base.DoubleBuffered; } set { } }
 
         [Category("DisabledProperties")]
+
         // TODO If this is not set automatically, first try decorating with 'DefaultValue' else assign in constructor.
         [Description("This property cannot be changed for the reason of the appearance of OurForm.")]
         public new FormBorderStyle FormBorderStyle { get; } = FormBorderStyle.None;
@@ -201,8 +202,6 @@ namespace OurCSharp.OurForm.Core
 
         [Category("OurForm")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-
-        // TODO See if this shows up in the property grid even though it's internal.
         public OurCloseButton CloseButton { get; }
 
         [Category("OurForm")]
@@ -212,35 +211,45 @@ namespace OurCSharp.OurForm.Core
         [Category("OurForm")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public OurMinimizeButton MinimizeButton { get; }
+
+        [DefaultValue(typeof(Padding), "9, 46, 10, 10")]
+        public new Padding Padding { get { return base.Padding; } set { base.Padding = value; } }
         #endregion
 
         #region Constructors
         protected OurForm()
         {
+            // 'ForeColor' has to be assigned here or it wont have it's default set to 'Color.White'.
+            base.ForeColor = Color.White;
+
+            base.DoubleBuffered = true;
             base.FormBorderStyle = FormBorderStyle.None;
-            base.Text = "OurForm";
-            this.BorderColor = Color.FromArgb(255, 0, 0, 0);
-            this._titleBarFont = new Font("Consolas", 10F, FontStyle.Regular);
 
-            /*
-             * Going to assign the overriden properties in the 'OnCreateControl' despite that it's in practice to do so
-             * in the Constructor, but being that they are overriden, I'm hoping that I'm not going to have to use
-             * the qualifier 'base'.
-             */
+            base.MinimumSize =
+                new Size(
+                    (int)
+                    this.CreateGraphics().
+                         MeasureString(base.Text = "OurForm",
+                                       this._titleBarFont = new Font("Consolas", 10F, FontStyle.Regular)).
+                         Width + 116,
+                    52);
 
-            // TODO Make sure everthing is set accordingly, else modify it to as it was previously.
-
-            base.Padding = new Padding(43, 25, 7, 7);
+            this.Padding = new Padding(9, 46, 10, 10);
 
             this.CloseButton = new OurCloseButton(this);
             this.MaximizeButton = new OurMaximizeButton(this);
             this.MinimizeButton = new OurMinimizeButton(this);
 
-            this._closeRect = new Rectangle(this.Width - 30, 0, 24, 24);
-            this._maximizeRect = new Rectangle(this.Width - 54, 0, 24, 24);
-            this._minimizeRect = new Rectangle(this.Width - 78, 0, 24, 24);
+            this._closeRect = new Rectangle(this.Width - 31, 0, 24, 24);
+            this._maximizeRect = new Rectangle(this.Width - 55, 0, 24, 24);
+            this._minimizeRect = new Rectangle(this.Width - 79, 0, 24, 24);
+
+            this._titleBarFont = new Font("Consolas", 10F, FontStyle.Regular);
 
             // TODO Not sure if should Invalidate here or just in the 'OnCreateControl'..
+
+            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+
             this.Invalidate();
         }
         #endregion
@@ -377,15 +386,16 @@ namespace OurCSharp.OurForm.Core
         }
 
         private void PaintButton(IOurFormButtonBase buttonBase, Graphics g, ref Pen p, ref SolidBrush sB, Rectangle r)
-            =>
-                this.PaintButton(
-                                 buttonBase.State != OurFormButtonStates.Disabled
-                                     ? buttonBase.Normal
-                                     : buttonBase.Disabled,
-                                 g,
-                                 ref p,
-                                 ref sB,
-                                 r);
+        {
+            if (buttonBase.State == OurFormButtonStates.Hidden) { return; }
+
+            this.PaintButton(
+                             buttonBase.State != OurFormButtonStates.Disabled ? buttonBase.Normal : buttonBase.Disabled,
+                             g,
+                             ref p,
+                             ref sB,
+                             r);
+        }
 
         private void PaintButton(IOurFormButtonDesigner buttonDesigner,
                                  Graphics g,
@@ -419,32 +429,21 @@ namespace OurCSharp.OurForm.Core
 
         protected override void OnCreateControl()
         {
-            // TODO See if anything noticable happens if this is not called.
-            // TODO May just keep it there anyways because it's best in practice.
-            ////base.OnCreateControl();
-
+            // BackColor has to be set here to function correctly.
             this.BackColor = Color.FromArgb(255, 75, 75, 75);
-            this.BorderColor = Color.FromArgb(255, 0, 0, 0);
-            this.DoubleBuffered = true;
 
-            this.DockPadding.Bottom = 7;
-            this.DockPadding.Left = 52;
-            this.DockPadding.Right = 7;
-            this.DockPadding.Top = 44;
+            this.BorderColor = Color.Black;
 
-            this.ForeColor = Color.FromArgb(255, 255, 255, 255);
+            /*
+             * 'ForeColor' needs to be assinged here as well as in the Constructor in order for the inital value and
+             * the default value to be set.
+             */
+            this.ForeColor = Color.White;
 
-            // TODO Check if 'FormBorderStyle' is set to None.  If not assign it to None.
-            // TODO Assign Icon once Resources File has been created.
-
-            // TODO This may not worrk accordingly.
-            this.MinimumSize =
-                new Size(
-                    (int)this.CreateGraphics().MeasureString(this.Text = "OurForm", this._titleBarFont).Width + 116,
-                    52);
-
-            // TODO If any filckering occurs, set this in the Constructor.
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true);
+            ////this.DockPadding.Bottom = 7;
+            ////this.DockPadding.Left = 52;
+            ////this.DockPadding.Right = 7;
+            ////this.DockPadding.Top = 44;
 
             // TODO Not sure if we should Invalidate here, just in the Constructor or both..
             this.Invalidate();
@@ -458,14 +457,17 @@ namespace OurCSharp.OurForm.Core
                 case OurBounds.Client: // TODO May need to handle 'Focus' manually.
                     break;
                 case OurBounds.CloseButton:
+                    if (this.CloseButton.State != OurFormButtonStates.Shown) { break; }
                     Application.ExitThread();
                     break;
                 case OurBounds.MaximizeButton:
+                    if (this.MaximizeButton.State != OurFormButtonStates.Shown) { break; }
                     this.WindowState = this.WindowState == FormWindowState.Maximized
                                            ? FormWindowState.Normal
                                            : FormWindowState.Maximized;
                     break;
                 case OurBounds.MinimizeButton:
+                    if (this.MinimizeButton.State != OurFormButtonStates.Shown) { break; }
                     this.WindowState = FormWindowState.Minimized;
                     break;
                 case OurBounds.OffClient:
@@ -552,7 +554,12 @@ namespace OurCSharp.OurForm.Core
 
             var clientRect = this.ClientRectangle;
 
-            ////g.FillRectangle(b, clientRect);
+            b.Color = this.BorderColor;
+
+            g.FillRectangle(b, 0, 0, this.Width, 24);
+            g.FillRectangle(b, this.Width - 7, 0, 7, this.Height);
+            g.FillRectangle(b, 0, 0, 6, this.Height);
+            g.FillRectangle(b, 0, this.Height - 7, this.Width, 7);
 
             clientRect.Width--;
             clientRect.Height--;
@@ -564,12 +571,7 @@ namespace OurCSharp.OurForm.Core
             clientRect.Width -= 12;
             clientRect.Height -= 30;
 
-            b.Color = this.BackColor;
-            g.FillRectangle(b, clientRect);
-
             g.DrawRectangle(p, clientRect);
-
-            b.Color = this.BorderColor;
 
             g.FillRectangle(b, 5, 5, 38, 38);
 

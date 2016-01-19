@@ -28,14 +28,14 @@ namespace OurCSharp.OurForm.Core.Properties.CloseButton.SubProperties
     {
         #region Fields
         private readonly OurForm _ourForm;
+
         private Color _boxBorderColor = Settings.Default.ClsBttnClckdBxBrdrClr;
         private Color _boxColor = Settings.Default.ClsBttnClckdBxClr;
         private Color _circleBorderColor = Settings.Default.ClsBttnClckdCrclBrdrClr;
-
         private Color _circleColor = Settings.Default.ClsBttnClckdBxClr;
+
         private bool _drawBox = Settings.Default.ClsBttnClckdDrwBx;
         private bool _drawBoxBorder = Settings.Default.ClsBttnClckdDrwBx;
-
         private bool _drawCircle = Settings.Default.ClsBttnClckdDrwCrcl;
         private bool _drawCircleBorder = Settings.Default.ClsBttnClckdDrwCrclBrdr;
         #endregion
