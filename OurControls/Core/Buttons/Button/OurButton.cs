@@ -18,8 +18,10 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics;
     using System.Drawing;
     using System.Drawing.Drawing2D;
+    using System.Linq;
     using System.Windows.Forms;
 
     using OurCSharp.OurControls.Core.Buttons.Enums;
@@ -83,22 +85,41 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
             set
             {
                 this._orientation = value;
+                this.Size = this.UpdateAndGetMinimumSize();
                 this.Invalidate();
             }
         }
 
         [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurButtonDesigner Normal { get; }
 
         [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurButtonDesigner Hovered { get; }
 
         [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurButtonDesigner Clicked { get; }
 
         [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurButtonDesigner Disabled { get; }
         #endregion
+
+        public bool IsInDesignerMode => this.DesignMode;
+
+        // TODO May have problems with this...
+        public override Size MinimumSize
+        {
+            get { return base.MinimumSize; }
+            set
+            {
+                base.MinimumSize = new Size(
+                    value.Width <= base.MinimumSize.Width ? base.MinimumSize.Width : value.Width,
+                    value.Height <= base.MinimumSize.Height ? base.MinimumSize.Height : value.Height);
+            }
+        }
 
         #region Constructors
         public OurButton()
@@ -118,50 +139,106 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
             this.Hovered = new OurButtonHovered(this);
             this.Clicked = new OurButtonClicked(this);
             this.Disabled = new OurButtonDisabled(this);
+
+            this.SizeChanged += (sender, args) => this.Invalidate();
         }
         #endregion
+
+        public void UpdateMinimumSize() { this.MinimumSize = this.UpdateAndGetMinimumSize(); }
+
+
+        private Size UpdateAndGetMinimumSize()
+        {
+            var minSizeF = SizeF.Empty;
+
+            foreach (var useText in new[]
+                                    {
+                                        new Tuple<bool, string>(this.Normal.UseText, this.Normal.Text),
+                                        new Tuple<bool, string>(this.Hovered.UseText, this.Hovered.Text),
+                                        new Tuple<bool, string>(this.Clicked.UseText, this.Clicked.Text),
+                                        new Tuple<bool, string>(this.Disabled.UseText, this.Disabled.Text)
+
+                                    }.Where(useText => useText.Item1))
+            {
+                SizeF sizeF;
+
+                minSizeF = (sizeF = this.CreateGraphics().MeasureString(useText.Item2, this.Font)).Width * sizeF.Height
+                           > minSizeF.Width * minSizeF.Height
+                               ? sizeF
+                               : minSizeF;
+            }
+
+            return
+                base.MinimumSize =
+                this._orientation == OurOrientation.Horizontal
+                    ? new SizeF(minSizeF.Width + this.Padding.Left + this.Padding.Top,
+                                minSizeF.Height + this.Padding.Bottom + this.Padding.Top).ToSize()
+                    : new SizeF(minSizeF.Height + this.Padding.Bottom + this.Padding.Top,
+                                minSizeF.Width + this.Padding.Left + this.Padding.Right).ToSize();
+        }
 
         #region Methods
         protected override void OnCreateControl()
         {
-            this.BackColor = this.Normal.BackColor;
-            this.ForeColor = this.Normal.TextColor;
+            this.Text = this.Normal.Text = this.Hovered.Text = this.Clicked.Text = this.Disabled.Text = this.Name;
+
+            // TODO If doesn't work, might have to use 'base'..
+            this.Size = this.MinimumSize = this.UpdateAndGetMinimumSize();
+
+            this.BackColor = this._ourDesigner.BackColor;
+            this.ForeColor = this._ourDesigner.TextColor;
+        }
+
+        protected override void OnEnabledChanged(EventArgs e)
+        {
+            base.OnEnabledChanged(e);
+
+            this.BackColor = (this._ourDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor;
+
+            this.UpdateColor();
+        }
+
+        private void UpdateColor()
+        {
+            this.ForeColor = this._ourDesigner.UseTextColor ? this._ourDesigner.TextColor : this.Normal.TextColor;
+            this.Text = this._ourDesigner.UseText ? this._ourDesigner.Text : this.Normal.Text;
+            this.Invalidate();
         }
 
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
-            this.BackColor = this.Enabled
-                                 ? (this._ourDesigner = this.Enabled ? this.Hovered : this.Disabled).BackColor
-                                 : this.Disabled.BackColor;
-            this.Invalidate();
+
+            this.BackColor = (this._ourDesigner = this.Enabled ? this.Hovered : this.Disabled).BackColor;
+
+            this.UpdateColor();
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            this.BackColor = this.Enabled
-                                 ? (this._ourDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor
-                                 : this.Disabled.BackColor;
-            this.Invalidate();
+
+            this.BackColor = (this._ourDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor;
+
+            this.UpdateColor();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
             base.OnMouseDown(e);
-            this.BackColor = this.Enabled
-                                 ? (this._ourDesigner = this.Enabled ? this.Clicked : this.Disabled).BackColor
-                                 : this.Disabled.BackColor;
-            this.Invalidate();
+
+            this.BackColor = (this._ourDesigner = this.Enabled ? this.Clicked : this.Disabled).BackColor;
+
+            this.UpdateColor();
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             base.OnMouseUp(e);
-            this.BackColor = this.Enabled
-                                 ? (this._ourDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor
-                                 : this.Disabled.BackColor;
-            this.Invalidate();
+
+            this.BackColor = (this._ourDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor;
+
+            this.UpdateColor();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -171,13 +248,12 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
             var g = e.Graphics;
             g.SmoothingMode = SmoothingMode.AntiAlias;
 
-            this.ForeColor = this._ourDesigner.UseTextColor ? this._ourDesigner.TextColor : this.Normal.TextColor;
-
-            var p = new Pen(this._ourDesigner.UseBorderColor ? this._ourDesigner.BorderColor : this.Normal.BorderColor);
-
             if (this._ourDesigner.UseBorderColor
                 || this.Normal.UseBorderColor)
             {
+                var p =
+                    new Pen(this._ourDesigner.UseBorderColor ? this._ourDesigner.BorderColor : this.Normal.BorderColor);
+
                 var clientRect = this.ClientRectangle;
 
                 clientRect.Width--;
@@ -186,19 +262,21 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
                 g.DrawRectangle(p, clientRect);
             }
 
-            var b = new SolidBrush(this._ourDesigner.UseTextColor ? this._ourDesigner.TextColor : this.Normal.TextColor);
+            var b = new SolidBrush(this.ForeColor);
 
-            SizeF textSizeF;
+            SizeF textSizeF = this.CreateGraphics().MeasureString(this.Text, this.Font);
 
             switch (this.Orientation)
             {
                 case OurOrientation.Horizontal:
-                    g.DrawString((this.Text = this._ourDesigner.UseText ? this._ourDesigner.Text : this.Normal.Text),
+                    Debug.WriteLine(this.Text);
+
+                    g.DrawString(this.Text,
                                  this.Font,
                                  b,
-                                 (textSizeF = this.CreateGraphics().MeasureString(this.Text, this.Font)).Width / 2F
-                                 + this.Padding.Left + this.Padding.Right,
-                                 this.Padding.Top);
+                                 this.Width / 2
+                                 - (textSizeF = this.CreateGraphics().MeasureString(this.Text, this.Font)).Width / 2 + 1,
+                                 this.Height / 2 - textSizeF.Height / 2);
                     break;
                 case OurOrientation.Verticle:
                     break;

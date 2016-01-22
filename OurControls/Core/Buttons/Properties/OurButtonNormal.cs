@@ -27,6 +27,7 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
     {
         #region Fields
         private readonly Control _ourControl;
+        private readonly IOurButtonBase _buttonBase;
 
         private Color _backColor = Color.FromArgb(255, 65, 65, 65);
         private Color _borderColor = Color.FromArgb(255, 25, 25, 25);
@@ -40,7 +41,6 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
         #region Properties
         [DefaultValue(true)]
         [Description("Should we use the BorderColor given here when OurButton is in the corresponding state?")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public bool UseBorderColor
         {
             get { return this._useBorderColor; }
@@ -54,31 +54,29 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
         [Browsable(false)]
         [DefaultValue(true)]
         [Description("Should we use the Text given here when OurButton is in the corresponding state?")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public bool UseText { get { return true; } set { } }
 
         [Browsable(false)]
         [DefaultValue(true)]
         [Description("Should we use the TextColor given here when OurButton is in the corresponding state?")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public bool UseTextColor { get { return true; } set { } }
 
         [DefaultValue(typeof(Color), "255, 65, 65, 65")]
         [Description("The background color of OurButton.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Color BackColor
         {
             get { return this._backColor; }
             set
             {
                 this._backColor = value;
-                this._ourControl.Invalidate();
+
+                if (!this._ourControl.Enabled) { return;}
+                this._ourControl.BackColor =  value;
             }
         }
 
         [DefaultValue(typeof(Color), "255, 25, 25, 25")]
         [Description("The color of the Border on OurButton.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Color BorderColor
         {
             get { return this._borderColor; }
@@ -91,28 +89,22 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
 
         [DefaultValue(typeof(Color), "255, 150, 150, 150")]
         [Description("The color of the Text on OurButton.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Color TextColor
         {
             get { return this._textColor; }
-            set
-            {
-                this._textColor = value;
-                this._ourControl.Invalidate();
-            }
+            set { this._ourControl.ForeColor = this._textColor = value; }
         }
 
         [Description("The Text displayed on OurButton.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public string Text
-        {
-            get { return this._text; }
+        public string Text { get { return this._text; }
             set
             {
-                this._text = value;
-                this._ourControl.Invalidate();
-            }
-        }
+                this._ourControl.Text = this._text = value;
+                if (this._buttonBase.IsInDesignerMode)
+                {
+                    this._buttonBase.UpdateMinimumSize();
+                }
+            } }
         #endregion
 
         #region Constructors
@@ -121,7 +113,7 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
         public OurButtonNormal(OurButton ourControl)
         {
             this._ourControl = ourControl;
-            this.Text = ourControl.Text;
+            this._buttonBase = ourControl;
         }
         #endregion
     }

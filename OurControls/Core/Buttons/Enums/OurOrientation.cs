@@ -1,5 +1,5 @@
 ﻿// ----------------------------------------------------------------------------
-// <copyright file="IOurButtonBase.cs" company="OurCSharp">
+// <copyright file="OurOrientation.cs" company="OurCSharp">
 //     Copyright © 2016 OurCSharp
 // 
 //     This program is free software; you can redistribute it and/or modify
@@ -14,30 +14,11 @@
 // </copyright>
 // ----------------------------------------------------------------------------
 
-namespace OurCSharp.OurControls.Core.Buttons.Interfaces
+namespace OurCSharp.OurControls.Core.Buttons.Enums
 {
-    using System.ComponentModel;
-    using System.Windows.Forms;
-
-    using OurCSharp.OurControls.Core.Buttons.Enums;
-
-    [TypeConverter(typeof(ExpandableObjectConverter))]
-    public interface IOurButtonBase
+    public enum OurOrientation
     {
-        #region Properties
-        void UpdateMinimumSize();
-
-        bool IsInDesignerMode { get; }
-        
-        OurOrientation Orientation { get; set; }
-
-        IOurButtonDesigner Normal { get; }
-
-        IOurButtonDesigner Hovered { get; }
-
-        IOurButtonDesigner Clicked { get; }
-
-        IOurButtonDesigner Disabled { get; }
-        #endregion
+        Horizontal,
+        Verticle
     }
 }

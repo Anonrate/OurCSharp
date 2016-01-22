@@ -18,59 +18,43 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
 {
     using System.ComponentModel;
     using System.Drawing;
+    using System.Windows.Forms;
 
     using OurCSharp.OurControls.Core.Buttons.Button;
     using OurCSharp.OurControls.Core.Buttons.Interfaces;
 
     internal class OurButtonDisabled : IOurButtonDesigner
     {
-        #region Properties
+        private readonly Control _ourControl;
 
-        // TODO Might not need to default attribute
-        // TODO Shouldn't need to invalidate here at all...
-        ////[DefaultValue(false)]
+        
+        #region Properties
         [Description("Should we use the BorderColor given here when OurButton is in the corresponding state?")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public bool UseBorderColor { get; set; } = false;
 
-        // TODO Might not need to default attribute
-        // TODO Shouldn't need to invalidate here at all...
-        ////[DefaultValue(false)]
         [Description("Should we use the Text given here when OurButton is in the corresponding state?")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public bool UseText { get; set; } = false;
 
-        // TODO Might not need to default attribute
-        // TODO Shouldn't need to invalidate here at all...
-        ////[DefaultValue(false)]
         [Description("Should we use the TextColor given here when OurButton is in the corresponding state?")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public bool UseTextColor { get; set; } = false;
+        public bool UseTextColor { get; set; } = true;
 
-        [DefaultValue(typeof(Color), "255, 50, 50, 50")]
         [Description("The background color of OurButton.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Color BackColor { get; set; } = Color.FromArgb(255, 50, 50, 50);
 
-        [DefaultValue(typeof(Color), "255, 25, 25, 25")]
         [Description("The color of the Border on OurButton.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public Color BorderColor { get; set; } = Color.FromArgb(255, 25, 25, 25);
 
-        [DefaultValue(typeof(Color), "255, 150, 150, 150")]
         [Description("The color of the Text on OurButton.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public Color TextColor { get; set; } = Color.FromArgb(255, 150, 150, 150);
+        public Color TextColor { get; set; } = Color.FromArgb(255, 100, 100, 100);
 
         [Description("The Text displayed on OurButton.")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public string Text { get; set; }
         #endregion
 
         #region Constructors
 
         // TODO Any other controls that will  be using this, add a cunstructor for.
-        public OurButtonDisabled(OurButton ourButton) { this.Text = ourButton.Text; }
+        public OurButtonDisabled(OurButton ourButton) { this._ourControl = ourButton; }
         #endregion
     }
 }
