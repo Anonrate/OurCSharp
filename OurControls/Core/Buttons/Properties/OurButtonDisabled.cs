@@ -18,16 +18,16 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
 {
     using System.ComponentModel;
     using System.Drawing;
-    using System.Windows.Forms;
 
-    using OurCSharp.OurControls.Core.Buttons.Button;
+    using OurCSharp.OurControls.Core.Buttons.Abstracts;
     using OurCSharp.OurControls.Core.Buttons.Interfaces;
 
     internal class OurButtonDisabled : IOurButtonDesigner
     {
-        private readonly Control _ourControl;
+        #region Fields
+        private readonly OurButtonsBase _ourControl;
+        #endregion
 
-        
         #region Properties
         [Description("Should we use the BorderColor given here when OurButton is in the corresponding state?")]
         public bool UseBorderColor { get; set; } = false;
@@ -52,9 +52,11 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
         #endregion
 
         #region Constructors
+        public OurButtonDisabled(OurButtonsBase buttonBase) { this._ourControl = buttonBase; }
+        #endregion
+
+        ////public OurButtonDisabled(OurButton ourButton) { this._ourControl = ourButton; }
 
         // TODO Any other controls that will  be using this, add a cunstructor for.
-        public OurButtonDisabled(OurButton ourButton) { this._ourControl = ourButton; }
-        #endregion
     }
 }

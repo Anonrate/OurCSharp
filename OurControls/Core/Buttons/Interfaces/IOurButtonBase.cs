@@ -17,7 +17,6 @@
 namespace OurCSharp.OurControls.Core.Buttons.Interfaces
 {
     using System.ComponentModel;
-    using System.Windows.Forms;
 
     using OurCSharp.OurControls.Core.Buttons.Enums;
 
@@ -25,10 +24,8 @@ namespace OurCSharp.OurControls.Core.Buttons.Interfaces
     public interface IOurButtonBase
     {
         #region Properties
-        void UpdateMinimumSize();
-
         bool IsInDesignerMode { get; }
-        
+
         OurOrientation Orientation { get; set; }
 
         IOurButtonDesigner Normal { get; }
@@ -38,6 +35,10 @@ namespace OurCSharp.OurControls.Core.Buttons.Interfaces
         IOurButtonDesigner Clicked { get; }
 
         IOurButtonDesigner Disabled { get; }
+        #endregion
+
+        #region Methods
+        void UpdateMinimumSize();
         #endregion
     }
 }

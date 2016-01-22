@@ -26,7 +26,6 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
 
     using OurCSharp.OurControls.Core.Buttons.Enums;
     using OurCSharp.OurControls.Core.Buttons.Interfaces;
-    using OurCSharp.OurControls.Core.Buttons.Properties;
 
     public class OurButton : Control, IOurButtonBase
     {
@@ -105,7 +104,6 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
         [Category("OurButton")]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurButtonDesigner Disabled { get; }
-        #endregion
 
         public bool IsInDesignerMode => this.DesignMode;
 
@@ -120,6 +118,7 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
                     value.Height <= base.MinimumSize.Height ? base.MinimumSize.Height : value.Height);
             }
         }
+        #endregion
 
         #region Constructors
         public OurButton()
@@ -134,19 +133,21 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
              * about this actually because it refering to another class.  Nonetheless it should still work as
              * inteded despite the way it's assigned...
              */
-            this._ourDesigner = this.Normal = new OurButtonNormal(this);
+            ////this._ourDesigner = this.Normal = new OurButtonNormal(this);
 
-            this.Hovered = new OurButtonHovered(this);
-            this.Clicked = new OurButtonClicked(this);
-            this.Disabled = new OurButtonDisabled(this);
+            ////this.Hovered = new OurButtonHovered(this);
+            ////this.Clicked = new OurButtonClicked(this);
+            ////this.Disabled = new OurButtonDisabled(this);
 
             this.SizeChanged += (sender, args) => this.Invalidate();
         }
         #endregion
 
+        #region Implementations
         public void UpdateMinimumSize() { this.MinimumSize = this.UpdateAndGetMinimumSize(); }
+        #endregion
 
-
+        #region Methods
         private Size UpdateAndGetMinimumSize()
         {
             var minSizeF = SizeF.Empty;
@@ -157,7 +158,6 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
                                         new Tuple<bool, string>(this.Hovered.UseText, this.Hovered.Text),
                                         new Tuple<bool, string>(this.Clicked.UseText, this.Clicked.Text),
                                         new Tuple<bool, string>(this.Disabled.UseText, this.Disabled.Text)
-
                                     }.Where(useText => useText.Item1))
             {
                 SizeF sizeF;
@@ -177,13 +177,12 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
                                 minSizeF.Width + this.Padding.Left + this.Padding.Right).ToSize();
         }
 
-        #region Methods
         protected override void OnCreateControl()
         {
             this.Text = this.Normal.Text = this.Hovered.Text = this.Clicked.Text = this.Disabled.Text = this.Name;
 
             // TODO If doesn't work, might have to use 'base'..
-            this.Size = this.MinimumSize = this.UpdateAndGetMinimumSize();
+            this.MinimumSize = this.UpdateAndGetMinimumSize();
 
             this.BackColor = this._ourDesigner.BackColor;
             this.ForeColor = this._ourDesigner.TextColor;

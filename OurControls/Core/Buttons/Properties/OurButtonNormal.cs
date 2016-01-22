@@ -18,16 +18,15 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
 {
     using System.ComponentModel;
     using System.Drawing;
-    using System.Windows.Forms;
 
-    using OurCSharp.OurControls.Core.Buttons.Button;
+    using OurCSharp.OurControls.Core.Buttons.Abstracts;
     using OurCSharp.OurControls.Core.Buttons.Interfaces;
 
     internal class OurButtonNormal : IOurButtonDesigner
     {
         #region Fields
-        private readonly Control _ourControl;
-        private readonly IOurButtonBase _buttonBase;
+        ////private readonly IOurButtonBase _buttonBase;
+        private readonly OurButtonsBase _ourControl;
 
         private Color _backColor = Color.FromArgb(255, 65, 65, 65);
         private Color _borderColor = Color.FromArgb(255, 25, 25, 25);
@@ -70,8 +69,8 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
             {
                 this._backColor = value;
 
-                if (!this._ourControl.Enabled) { return;}
-                this._ourControl.BackColor =  value;
+                if (!this._ourControl.Enabled) { return; }
+                this._ourControl.BackColor = value;
             }
         }
 
@@ -96,25 +95,27 @@ namespace OurCSharp.OurControls.Core.Buttons.Properties
         }
 
         [Description("The Text displayed on OurButton.")]
-        public string Text { get { return this._text; }
+        public string Text
+        {
+            get { return this._text; }
             set
             {
                 this._ourControl.Text = this._text = value;
-                if (this._buttonBase.IsInDesignerMode)
-                {
-                    this._buttonBase.UpdateMinimumSize();
-                }
-            } }
+                if (this._ourControl.IsInDesignerMode) { this._ourControl.UpdateMinimumSize(); }
+            }
+        }
         #endregion
 
         #region Constructors
+        public OurButtonNormal(OurButtonsBase buttonBase) { this._ourControl = buttonBase; }
+        #endregion
+
+        ////}
+        ////    this._buttonBase = ourControl;
+        ////    this._ourControl = ourControl;
+        ////{
+        ////public OurButtonNormal(OurButton ourControl)
 
         // TODO Any other controls that will  be using this, add a cunstructor for.
-        public OurButtonNormal(OurButton ourControl)
-        {
-            this._ourControl = ourControl;
-            this._buttonBase = ourControl;
-        }
-        #endregion
     }
 }
