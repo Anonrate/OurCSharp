@@ -32,18 +32,6 @@ namespace OurCSharp.OurForm.Core.Properties.MaximizeButton
         #endregion
 
         #region Properties
-        [DefaultValue(typeof(OurFormButtonStates), "Shown")]
-        [Description("Should this button be, 'Disabled', 'Hidden' or 'Shown'?")]
-        public OurFormButtonStates State
-        {
-            get { return this._state; }
-            set
-            {
-                this._state = value;
-                this._ourForm.Invalidate();
-            }
-        }
-
         [Browsable(false)]
         public OurBounds ButtonBounds { get; } = OurBounds.MaximizeButton;
 
@@ -58,6 +46,18 @@ namespace OurCSharp.OurForm.Core.Properties.MaximizeButton
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurFormButtonDesigner Disabled { get; }
+
+        [DefaultValue(typeof(OurFormButtonStates), "Shown")]
+        [Description("Should this button be, 'Disabled', 'Hidden' or 'Shown'?")]
+        public OurFormButtonStates State
+        {
+            get { return this._state; }
+            set
+            {
+                this._state = value;
+                this._ourForm.Invalidate();
+            }
+        }
         #endregion
 
         #region Constructors

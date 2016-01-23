@@ -29,20 +29,20 @@ namespace OurCSharp.OurForm.Core.Properties.MinimizeButton.SubProperties
         #region Fields
         private readonly OurForm _ourForm;
 
-        private Color _boxBorderColor = Settings.Default.MnmzBttnNrmlBxBrdrClr;
-        private Color _boxColor = Settings.Default.MnmzBttnNrmlBxClr;
-        private Color _circleBorderColor = Settings.Default.MnmzBttnNrmlCrclBrdrClr;
-        private Color _circleColor = Settings.Default.MnmzBttnNrmlBxClr;
-
-        private bool _drawBox = Settings.Default.MnmzBttnNrmlDrwBx;
-        private bool _drawBoxBorder = Settings.Default.MnmzBttnNrmlDrwBx;
         private bool _drawCircle = Settings.Default.MnmzBttnNrmlDrwCrcl;
         private bool _drawCircleBorder = Settings.Default.MnmzBttnNrmlDrwCrclBrdr;
+        private bool _drawBox = Settings.Default.MnmzBttnNrmlDrwBx;
+        private bool _drawBoxBorder = Settings.Default.MnmzBttnNrmlDrwBx;
+
+        private Color _circleColor = Settings.Default.MnmzBttnNrmlBxClr;
+        private Color _circleBorderColor = Settings.Default.MnmzBttnNrmlCrclBrdrClr;
+        private Color _boxColor = Settings.Default.MnmzBttnNrmlBxClr;
+        private Color _boxBorderColor = Settings.Default.MnmzBttnNrmlBxBrdrClr;
         #endregion
 
         #region Properties
         [DefaultValue(true)]
-        [Description("Draw the Circle on OurForm?")]
+        [Description("Draw the Circle for the Minimize Button on OurForm?")]
         public bool DrawCircle
         {
             get { return this._drawCircle; }
@@ -54,7 +54,7 @@ namespace OurCSharp.OurForm.Core.Properties.MinimizeButton.SubProperties
         }
 
         [DefaultValue(true)]
-        [Description("Draw the Circle Border on OurForm?")]
+        [Description("Draw the Border for the Circle of the Minimize Button on OurForm?")]
         public bool DrawCircleBorder
         {
             get { return this._drawCircleBorder; }
@@ -114,7 +114,7 @@ namespace OurCSharp.OurForm.Core.Properties.MinimizeButton.SubProperties
         }
 
         [DefaultValue(typeof(Color), "White")]
-        [Description("Color of the Box on OurForm.")]
+        [Description("Color of the Box on the Minimize Button of OurForm.")]
         public Color BoxColor
         {
             get { return this._boxColor; }
@@ -126,7 +126,7 @@ namespace OurCSharp.OurForm.Core.Properties.MinimizeButton.SubProperties
         }
 
         [DefaultValue(typeof(Color), "255, 75, 75, 75")]
-        [Description("Color of the Border on the Box of OurForm.")]
+        [Description("Color of the Border on the Box of the Minimize Button of OurForm.")]
         public Color BoxBorderColor
         {
             get { return this._boxBorderColor; }

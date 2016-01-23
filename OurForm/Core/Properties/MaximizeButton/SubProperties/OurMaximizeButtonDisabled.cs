@@ -29,15 +29,15 @@ namespace OurCSharp.OurForm.Core.Properties.MaximizeButton.SubProperties
         #region Fields
         private readonly OurForm _ourForm;
 
-        private Color _boxBorderColor = Settings.Default.MxmzBttnDsbldBxBrdrClr;
-        private Color _boxColor = Settings.Default.MxmzBttnDsbldBxClr;
-        private Color _circleBorderColor = Settings.Default.MxmzBttnDsbldCrclBrdrClr;
-        private Color _circleColor = Settings.Default.MxmzBttnDsbldBxClr;
-
-        private bool _drawBox = Settings.Default.MxmzBttnDsbldDrwBx;
-        private bool _drawBoxBorder = Settings.Default.MxmzBttnDsbldDrwBx;
         private bool _drawCircle = Settings.Default.MxmzBttnDsbldDrwCrcl;
         private bool _drawCircleBorder = Settings.Default.MxmzBttnDsbldDrwCrclBrdr;
+        private bool _drawBox = Settings.Default.MxmzBttnDsbldDrwBx;
+        private bool _drawBoxBorder = Settings.Default.MxmzBttnDsbldDrwBx;
+
+        private Color _boxColor = Settings.Default.MxmzBttnDsbldBxClr;
+        private Color _boxBorderColor = Settings.Default.MxmzBttnDsbldBxBrdrClr;
+        private Color _circleColor = Settings.Default.MxmzBttnDsbldBxClr;
+        private Color _circleBorderColor = Settings.Default.MxmzBttnDsbldCrclBrdrClr;
         #endregion
 
         #region Properties

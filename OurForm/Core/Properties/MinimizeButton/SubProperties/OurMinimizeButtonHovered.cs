@@ -29,15 +29,15 @@ namespace OurCSharp.OurForm.Core.Properties.MinimizeButton.SubProperties
         #region Fields
         private readonly OurForm _ourForm;
 
-        private Color _boxBorderColor = Settings.Default.MnmzBttnHvrdBxBrdrClr;
-        private Color _boxColor = Settings.Default.MnmzBttnHvrdBxClr;
-        private Color _circleBorderColor = Settings.Default.MnmzBttnHvrdCrclBrdrClr;
-        private Color _circleColor = Settings.Default.MnmzBttnHvrdBxClr;
-
-        private bool _drawBox = Settings.Default.MnmzBttnHvrdDrwBx;
-        private bool _drawBoxBorder = Settings.Default.MnmzBttnHvrdDrwBx;
         private bool _drawCircle = Settings.Default.MnmzBttnHvrdDrwCrcl;
         private bool _drawCircleBorder = Settings.Default.MnmzBttnHvrdDrwCrclBrdr;
+        private bool _drawBox = Settings.Default.MnmzBttnHvrdDrwBx;
+        private bool _drawBoxBorder = Settings.Default.MnmzBttnHvrdDrwBx;
+
+        private Color _circleColor = Settings.Default.MnmzBttnHvrdBxClr;
+        private Color _circleBorderColor = Settings.Default.MnmzBttnHvrdCrclBrdrClr;
+        private Color _boxColor = Settings.Default.MnmzBttnHvrdBxClr;
+        private Color _boxBorderColor = Settings.Default.MnmzBttnHvrdBxBrdrClr;
         #endregion
 
         #region Properties
@@ -61,6 +61,18 @@ namespace OurCSharp.OurForm.Core.Properties.MinimizeButton.SubProperties
             set
             {
                 this._drawCircleBorder = value;
+                this._ourForm.Invalidate();
+            }
+        }
+
+        [DefaultValue(typeof(Color), "255, 75, 75, 75")]
+        [Description("Color of the Border on the Box of OurForm.")]
+        public Color BoxBorderColor
+        {
+            get { return this._boxBorderColor; }
+            set
+            {
+                this._boxBorderColor = value;
                 this._ourForm.Invalidate();
             }
         }
@@ -121,18 +133,6 @@ namespace OurCSharp.OurForm.Core.Properties.MinimizeButton.SubProperties
             set
             {
                 this._boxColor = value;
-                this._ourForm.Invalidate();
-            }
-        }
-
-        [DefaultValue(typeof(Color), "255, 75, 75, 75")]
-        [Description("Color of the Border on the Box of OurForm.")]
-        public Color BoxBorderColor
-        {
-            get { return this._boxBorderColor; }
-            set
-            {
-                this._boxBorderColor = value;
                 this._ourForm.Invalidate();
             }
         }

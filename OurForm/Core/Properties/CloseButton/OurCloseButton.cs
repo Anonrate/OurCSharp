@@ -32,6 +32,9 @@ namespace OurCSharp.OurForm.Core.Properties.CloseButton
         #endregion
 
         #region Properties
+        [Browsable(false)]
+        public OurBounds ButtonBounds { get; } = OurBounds.CloseButton;
+
         [DefaultValue(typeof(OurFormButtonStates), "Shown")]
         [Description("Should this button be, 'Disabled', 'Hidden' or 'Shown'?")]
         public OurFormButtonStates State
@@ -43,9 +46,6 @@ namespace OurCSharp.OurForm.Core.Properties.CloseButton
                 this._ourForm.Invalidate();
             }
         }
-
-        [Browsable(false)]
-        public OurBounds ButtonBounds { get; } = OurBounds.CloseButton;
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public IOurFormButtonDesigner Normal { get; }

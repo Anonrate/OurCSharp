@@ -17,9 +17,11 @@
 namespace OurCSharp.OurForm.Core.Interfaces
 {
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public interface IOurFormButtonDesigner
     {
         #region Properties

@@ -17,24 +17,27 @@
 namespace OurCSharp.OurForm.Core.Interfaces
 {
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
 
     using OurCSharp.OurForm.Core.Enums;
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
+    [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public interface IOurFormButtonBase
     {
         #region Properties
-        OurFormButtonStates State { get; set; }
-
         OurBounds ButtonBounds { get; }
 
+        OurFormButtonStates State { get; set; }
+
         IOurFormButtonDesigner Normal { get; }
+
+        IOurFormButtonDesigner Disabled { get; }
 
         IOurFormButtonDesigner Hovered { get; }
 
         IOurFormButtonDesigner Clicked { get; }
-
-        IOurFormButtonDesigner Disabled { get; }
         #endregion
     }
 }

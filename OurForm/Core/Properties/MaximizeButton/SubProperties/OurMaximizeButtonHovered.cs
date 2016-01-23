@@ -29,15 +29,15 @@ namespace OurCSharp.OurForm.Core.Properties.MaximizeButton.SubProperties
         #region Fields
         private readonly OurForm _ourForm;
 
-        private Color _boxBorderColor = Settings.Default.MxmzBttnHvrdBxBrdrClr;
-        private Color _boxColor = Settings.Default.MxmzBttnHvrdBxClr;
-        private Color _circleBorderColor = Settings.Default.MxmzBttnHvrdCrclBrdrClr;
-        private Color _circleColor = Settings.Default.MxmzBttnHvrdBxClr;
-
-        private bool _drawBox = Settings.Default.MxmzBttnHvrdDrwBx;
-        private bool _drawBoxBorder = Settings.Default.MxmzBttnHvrdDrwBx;
         private bool _drawCircle = Settings.Default.MxmzBttnHvrdDrwCrcl;
         private bool _drawCircleBorder = Settings.Default.MxmzBttnHvrdDrwCrclBrdr;
+        private bool _drawBox = Settings.Default.MxmzBttnHvrdDrwBx;
+        private bool _drawBoxBorder = Settings.Default.MxmzBttnHvrdDrwBx;
+
+        private Color _circleColor = Settings.Default.MxmzBttnHvrdBxClr;
+        private Color _circleBorderColor = Settings.Default.MxmzBttnHvrdCrclBrdrClr;
+        private Color _boxColor = Settings.Default.MxmzBttnHvrdBxClr;
+        private Color _boxBorderColor = Settings.Default.MxmzBttnHvrdBxBrdrClr;
         #endregion
 
         #region Properties
