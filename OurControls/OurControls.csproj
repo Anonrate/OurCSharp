@@ -43,24 +43,34 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\Buttons\Abstracts\OurButtonsBase.cs">
+    <Compile Include="Core\Buttons\Button\Abstracts\OurButtonBase.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Core\Buttons\Button\Interfaces\IOurButtonBase.cs" />
+    <Compile Include="Core\Buttons\Button\Interfaces\IOurButtonDesigner.cs" />
+    <Compile Include="Core\Buttons\Button\OurButtonOLD.cs" />
     <Compile Include="Core\Buttons\Button\OurButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Core\Buttons\Button\OurButtonR1.cs">
+    <Compile Include="Core\Buttons\Button\Properties\OurButtonClicked.cs" />
+    <Compile Include="Core\Buttons\Button\Properties\OurButtonDisabled.cs" />
+    <Compile Include="Core\Buttons\Button\Properties\OurButtonHovered.cs" />
+    <Compile Include="Core\Buttons\Button\Properties\OurButtonNormal.cs" />
+    <Compile Include="Core\Buttons\CheckButton\Abstracts\OurCheckButtonBase.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Core\Buttons\Interfaces\IOurButtonBase.cs" />
-    <Compile Include="Core\Buttons\Interfaces\IOurButtonDesigner.cs" />
+    <Compile Include="Core\Buttons\CheckButton\Interfaces\IOurCheckButtonDesigner.cs" />
+    <Compile Include="Core\Buttons\CheckButton\OurCheckButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Core\Buttons\CheckButton\Properties\OurCheckButtonClicked.cs" />
+    <Compile Include="Core\Buttons\CheckButton\Properties\OurCheckButtonDisabled.cs" />
+    <Compile Include="Core\Buttons\CheckButton\Properties\OurCheckButtonHovered.cs" />
+    <Compile Include="Core\Buttons\CheckButton\Properties\OurCheckButtonNormal.cs" />
     <Compile Include="Core\Buttons\Enums\OurOrientation.cs" />
-    <Compile Include="Core\Buttons\Properties\OurButtonClicked.cs" />
-    <Compile Include="Core\Buttons\Properties\OurButtonDisabled.cs" />
-    <Compile Include="Core\Buttons\Properties\OurButtonHovered.cs" />
-    <Compile Include="Core\Buttons\Properties\OurButtonNormal.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

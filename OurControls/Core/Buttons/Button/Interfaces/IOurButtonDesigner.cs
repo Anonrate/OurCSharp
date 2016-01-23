@@ -14,28 +14,30 @@
 // </copyright>
 // ----------------------------------------------------------------------------
 
-namespace OurCSharp.OurControls.Core.Buttons.Interfaces
+namespace OurCSharp.OurControls.Core.Buttons.Button.Interfaces
 {
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public interface IOurButtonDesigner
     {
         #region Properties
+        Color BackColor { get; set; }
+
+        Color BorderColor { get; set; }
+
+        string Text { get; set; }
+
+        Color TextColor { get; set; }
+
         bool UseBorderColor { get; set; }
 
         bool UseText { get; set; }
 
         bool UseTextColor { get; set; }
-
-        Color BackColor { get; set; }
-
-        Color BorderColor { get; set; }
-
-        Color TextColor { get; set; }
-
-        string Text { get; set; }
         #endregion
     }
 }

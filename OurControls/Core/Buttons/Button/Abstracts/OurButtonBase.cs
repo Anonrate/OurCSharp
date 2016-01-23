@@ -1,5 +1,5 @@
 ﻿// ----------------------------------------------------------------------------
-// <copyright file="OurButtonsBase.cs" company="OurCSharp">
+// <copyright file="OurButtonBase.cs" company="OurCSharp">
 //     Copyright © 2016 OurCSharp
 // 
 //     This program is free software; you can redistribute it and/or modify
@@ -14,30 +14,26 @@
 // </copyright>
 // ----------------------------------------------------------------------------
 
-namespace OurCSharp.OurControls.Core.Buttons.Abstracts
+namespace OurCSharp.OurControls.Core.Buttons.Button.Abstracts
 {
     using System;
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
     using System.Drawing;
     using System.Linq;
     using System.Windows.Forms;
 
+    using OurCSharp.OurControls.Core.Buttons.Button.Interfaces;
+    using OurCSharp.OurControls.Core.Buttons.Button.Properties;
     using OurCSharp.OurControls.Core.Buttons.Enums;
-    using OurCSharp.OurControls.Core.Buttons.Interfaces;
-    using OurCSharp.OurControls.Core.Buttons.Properties;
 
-    public abstract class OurButtonsBase : Control, IOurButtonBase
+    public abstract class OurButtonBase : Control
     {
         #region Fields
         private OurOrientation _orientation = OurOrientation.Horizontal;
         #endregion
 
         #region Properties
-        public IOurButtonDesigner _ourDesigner { get; private set; }
-
-        [DefaultValue(typeof(Padding), "6, 2, 6, 2")]
-        public new Padding Padding { get { return base.Padding; } set { base.Padding = value; } }
-
         [Browsable(false)]
         public override Color BackColor
         {
@@ -60,6 +56,17 @@ namespace OurCSharp.OurControls.Core.Buttons.Abstracts
             }
         }
 
+        public override Size MinimumSize
+        {
+            get { return base.MinimumSize; }
+            set
+            {
+                base.MinimumSize = new Size(
+                    value.Width <= base.MinimumSize.Width ? base.MinimumSize.Width : value.Width,
+                    value.Height <= base.MinimumSize.Height ? base.MinimumSize.Height : value.Height);
+            }
+        }
+
         [Browsable(false)]
         public override string Text
         {
@@ -75,7 +82,23 @@ namespace OurCSharp.OurControls.Core.Buttons.Abstracts
         [Description("This cannot be changed for rendering and visual appearance reasons.")]
         protected override bool DoubleBuffered { get { return base.DoubleBuffered; } set { } }
 
+        [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurButtonDesigner Clicked { get; }
+
+        [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurButtonDesigner Disabled { get; }
+
+        [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurButtonDesigner Hovered { get; }
+
         public bool IsInDesignerMode => this.DesignMode;
+
+        [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurButtonDesigner Normal { get; }
 
         [Category("OurButton")]
         [DefaultValue(typeof(OurOrientation), "Horizontal")]
@@ -91,42 +114,21 @@ namespace OurCSharp.OurControls.Core.Buttons.Abstracts
             }
         }
 
-        [Category("OurButton")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IOurButtonDesigner Normal { get; }
+        [DefaultValue(typeof(Padding), "6, 2, 6, 2")]
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Needs to be visable in Designer.")]
+        public new Padding Padding { get { return base.Padding; } set { base.Padding = value; } }
 
-        [Category("OurButton")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IOurButtonDesigner Hovered { get; }
-
-        [Category("OurButton")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IOurButtonDesigner Clicked { get; }
-
-        [Category("OurButton")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IOurButtonDesigner Disabled { get; }
-
-        public override Size MinimumSize
-        {
-            get { return base.MinimumSize; }
-            set
-            {
-                base.MinimumSize = new Size(
-                    value.Width <= base.MinimumSize.Width ? base.MinimumSize.Width : value.Width,
-                    value.Height <= base.MinimumSize.Height ? base.MinimumSize.Height : value.Height);
-            }
-        }
+        protected IOurButtonDesigner OurDesigner { get; private set; }
         #endregion
 
         #region Constructors
-        protected OurButtonsBase()
+        protected OurButtonBase()
         {
             base.DoubleBuffered = true;
 
             this.Padding = new Padding(6, 2, 6, 2);
 
-            this._ourDesigner = this.Normal = new OurButtonNormal(this);
+            this.OurDesigner = this.Normal = new OurButtonNormal(this);
 
             this.Hovered = new OurButtonHovered(this);
             this.Clicked = new OurButtonClicked(this);
@@ -136,11 +138,9 @@ namespace OurCSharp.OurControls.Core.Buttons.Abstracts
         }
         #endregion
 
-        #region Implementations
-        public void UpdateMinimumSize() { this.MinimumSize = this.UpdateAndGetMinimumSize(); }
-        #endregion
-
         #region Methods
+        public void UpdateMinimumSize() { this.MinimumSize = this.UpdateAndGetMinimumSize(); }
+
         protected override void OnCreateControl()
         {
             this.Text = this.Normal.Text = this.Hovered.Text = this.Clicked.Text = this.Disabled.Text = this.Name;
@@ -148,40 +148,15 @@ namespace OurCSharp.OurControls.Core.Buttons.Abstracts
             // TODO If doesn't work, might have to use 'base'..
             this.MinimumSize = this.UpdateAndGetMinimumSize();
 
-            this.BackColor = this._ourDesigner.BackColor;
-            this.ForeColor = this._ourDesigner.TextColor;
+            this.BackColor = this.OurDesigner.BackColor;
+            this.ForeColor = this.OurDesigner.TextColor;
         }
 
         protected override void OnEnabledChanged(EventArgs e)
         {
             base.OnEnabledChanged(e);
 
-            this.BackColor = (this._ourDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor;
-
-            this.UpdateColor();
-        }
-
-        private void UpdateColor()
-        {
-            this.ForeColor = this._ourDesigner.UseTextColor ? this._ourDesigner.TextColor : this.Normal.TextColor;
-            this.Text = this._ourDesigner.UseText ? this._ourDesigner.Text : this.Normal.Text;
-            this.Invalidate();
-        }
-
-        protected override void OnMouseEnter(EventArgs e)
-        {
-            base.OnMouseEnter(e);
-
-            this.BackColor = (this._ourDesigner = this.Enabled ? this.Hovered : this.Disabled).BackColor;
-
-            this.UpdateColor();
-        }
-
-        protected override void OnMouseLeave(EventArgs e)
-        {
-            base.OnMouseLeave(e);
-
-            this.BackColor = (this._ourDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor;
+            this.BackColor = (this.OurDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor;
 
             this.UpdateColor();
         }
@@ -190,7 +165,25 @@ namespace OurCSharp.OurControls.Core.Buttons.Abstracts
         {
             base.OnMouseDown(e);
 
-            this.BackColor = (this._ourDesigner = this.Enabled ? this.Clicked : this.Disabled).BackColor;
+            this.BackColor = (this.OurDesigner = this.Enabled ? this.Clicked : this.Disabled).BackColor;
+
+            this.UpdateColor();
+        }
+
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+
+            this.BackColor = (this.OurDesigner = this.Enabled ? this.Hovered : this.Disabled).BackColor;
+
+            this.UpdateColor();
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+
+            this.BackColor = (this.OurDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor;
 
             this.UpdateColor();
         }
@@ -199,7 +192,7 @@ namespace OurCSharp.OurControls.Core.Buttons.Abstracts
         {
             base.OnMouseUp(e);
 
-            this.BackColor = (this._ourDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor;
+            this.BackColor = (this.OurDesigner = this.Enabled ? this.Normal : this.Disabled).BackColor;
 
             this.UpdateColor();
         }
@@ -232,8 +225,13 @@ namespace OurCSharp.OurControls.Core.Buttons.Abstracts
                     : new SizeF(minSizeF.Height + this.Padding.Bottom + this.Padding.Top,
                                 minSizeF.Width + this.Padding.Left + this.Padding.Right).ToSize();
         }
-        #endregion
 
-        ////private IOurButtonDesigner _ourDesigner;
+        private void UpdateColor()
+        {
+            this.ForeColor = this.OurDesigner.UseTextColor ? this.OurDesigner.TextColor : this.Normal.TextColor;
+            this.Text = this.OurDesigner.UseText ? this.OurDesigner.Text : this.Normal.Text;
+            this.Invalidate();
+        }
+        #endregion
     }
 }

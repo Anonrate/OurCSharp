@@ -14,27 +14,29 @@
 // </copyright>
 // ----------------------------------------------------------------------------
 
-namespace OurCSharp.OurControls.Core.Buttons.Interfaces
+namespace OurCSharp.OurControls.Core.Buttons.Button.Interfaces
 {
     using System.ComponentModel;
+    using System.Diagnostics.CodeAnalysis;
 
     using OurCSharp.OurControls.Core.Buttons.Enums;
 
     [TypeConverter(typeof(ExpandableObjectConverter))]
+    [SuppressMessage("ReSharper", "UnusedMemberInSuper.Global")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global")]
     public interface IOurButtonBase
     {
         #region Properties
-        bool IsInDesignerMode { get; }
-
-        OurOrientation Orientation { get; set; }
-
-        IOurButtonDesigner Normal { get; }
-
-        IOurButtonDesigner Hovered { get; }
-
         IOurButtonDesigner Clicked { get; }
 
         IOurButtonDesigner Disabled { get; }
+
+        IOurButtonDesigner Hovered { get; }
+        bool IsInDesignerMode { get; }
+
+        IOurButtonDesigner Normal { get; }
+
+        OurOrientation Orientation { get; set; }
         #endregion
 
         #region Methods
