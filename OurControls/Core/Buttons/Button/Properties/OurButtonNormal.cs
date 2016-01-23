@@ -27,16 +27,38 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Properties
         #region Fields
         private readonly OurButtonBase _buttonBase;
 
+        private bool _useBorderColor = true;
+
         private Color _backColor = Color.FromArgb(255, 65, 65, 65);
         private Color _borderColor = Color.FromArgb(255, 25, 25, 25);
-
-        private string _text;
         private Color _textColor = Color.FromArgb(255, 150, 150, 150);
 
-        private bool _useBorderColor = true;
+        private string _text;
         #endregion
 
         #region Properties
+        [DefaultValue(true)]
+        [Description("Should we use the BorderColor given here when OurButton is in the corresponding state?")]
+        public bool UseBorderColor
+        {
+            get { return this._useBorderColor; }
+            set
+            {
+                this._useBorderColor = value;
+                this._buttonBase.Invalidate();
+            }
+        }
+
+        [Browsable(false)]
+        [DefaultValue(true)]
+        [Description("Should we use the Text given here when OurButton is in the corresponding state?")]
+        public bool UseText { get { return true; } set { } }
+
+        [Browsable(false)]
+        [DefaultValue(true)]
+        [Description("Should we use the TextColor given here when OurButton is in the corresponding state?")]
+        public bool UseTextColor { get { return true; } set { } }
+
         [DefaultValue(typeof(Color), "255, 65, 65, 65")]
         [Description("The background color of OurButton.")]
         public Color BackColor
@@ -63,6 +85,14 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Properties
             }
         }
 
+        [DefaultValue(typeof(Color), "255, 150, 150, 150")]
+        [Description("The color of the Text on OurButton.")]
+        public Color TextColor
+        {
+            get { return this._textColor; }
+            set { this._buttonBase.ForeColor = this._textColor = value; }
+        }
+
         [Description("The Text displayed on OurButton.")]
         public string Text
         {
@@ -73,36 +103,6 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Properties
                 if (this._buttonBase.IsInDesignerMode) { this._buttonBase.UpdateMinimumSize(); }
             }
         }
-
-        [DefaultValue(typeof(Color), "255, 150, 150, 150")]
-        [Description("The color of the Text on OurButton.")]
-        public Color TextColor
-        {
-            get { return this._textColor; }
-            set { this._buttonBase.ForeColor = this._textColor = value; }
-        }
-
-        [DefaultValue(true)]
-        [Description("Should we use the BorderColor given here when OurButton is in the corresponding state?")]
-        public bool UseBorderColor
-        {
-            get { return this._useBorderColor; }
-            set
-            {
-                this._useBorderColor = value;
-                this._buttonBase.Invalidate();
-            }
-        }
-
-        [Browsable(false)]
-        [DefaultValue(true)]
-        [Description("Should we use the Text given here when OurButton is in the corresponding state?")]
-        public bool UseText { get { return true; } set { } }
-
-        [Browsable(false)]
-        [DefaultValue(true)]
-        [Description("Should we use the TextColor given here when OurButton is in the corresponding state?")]
-        public bool UseTextColor { get { return true; } set { } }
         #endregion
 
         #region Constructors

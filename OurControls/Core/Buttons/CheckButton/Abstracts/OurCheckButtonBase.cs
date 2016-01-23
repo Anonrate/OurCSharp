@@ -84,6 +84,10 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Abstracts
         [Description("This cannot be changed for rendering and visual appearance reasons.")]
         protected override bool DoubleBuffered { get { return base.DoubleBuffered; } set { } }
 
+        [DefaultValue(typeof(Padding), "6, 2, 6, 2")]
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Needs to be visable in Designer.")]
+        public new Padding Padding { get { return base.Padding; } set { base.Padding = value; } }
+
         [Category("OurCheckButton")]
         [DefaultValue(false)]
         [Description("Is OurCheckButton Checked?")]
@@ -97,23 +101,11 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Abstracts
             }
         }
 
-        [Category("OurCheckButton")]
-        public IOurCheckButtonDesigner Clicked { get; }
-
-        [Category("OurCheckButton")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IOurCheckButtonDesigner Disabled { get; }
-
-        [Category("OurCheckButton")]
-        public IOurCheckButtonDesigner Hovered { get; }
-
         public bool IsInDesignerMode => this.DesignMode;
-
-        [Category("OurCheckButton")]
-        public IOurCheckButtonDesigner Normal { get; }
 
         [DefaultValue(typeof(OurOrientation), "Horizontal")]
         [Description("The Orientation of OurCheckButton.")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
         public OurOrientation Orientation
         {
             get { return this._orientation; }
@@ -125,9 +117,21 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Abstracts
             }
         }
 
-        [DefaultValue(typeof(Padding), "6, 2, 6, 2")]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Needs to be visable in Designer.")]
-        public new Padding Padding { get { return base.Padding; } set { base.Padding = value; } }
+        [Category("OurCheckButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurCheckButtonDesigner Normal { get; }
+
+        [Category("OurCheckButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurCheckButtonDesigner Hovered { get; }
+
+        [Category("OurCheckButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurCheckButtonDesigner Clicked { get; }
+
+        [Category("OurCheckButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurCheckButtonDesigner Disabled { get; }
 
         protected IOurCheckButtonDesigner OurDesigner { get; private set; }
         #endregion
@@ -150,8 +154,6 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Abstracts
         #endregion
 
         #region Methods
-        public void UpdateMinimumSize() { this.MinimumSize = this.UpdateAndGetMinimumSize(); }
-
         protected override void OnCreateControl()
         {
             this.Text = this.Normal.Text = this.Hovered.Text = this.Clicked.Text = this.Disabled.Text = this.Name;
@@ -215,6 +217,8 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Abstracts
 
             this.UpdateColor();
         }
+
+        public void UpdateMinimumSize() { this.MinimumSize = this.UpdateAndGetMinimumSize(); }
 
         private Size UpdateAndGetMinimumSize()
         {

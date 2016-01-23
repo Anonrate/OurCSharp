@@ -68,11 +68,9 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton
 
             g.DrawRectangle(p, r);
 
-            if (this.Checked)
-            {
-                b.Color = this.OurDesigner.UseCheckColor ? this.OurDesigner.CheckColor : this.Normal.CheckColor;
-                g.FillRectangle(b, new Rectangle(r.X + 2, r.Y + 2, r.Width - 4, r.Height - 4));
-            }
+            if (!this.Checked) { return; }
+            b.Color = this.OurDesigner.UseCheckColor ? this.OurDesigner.CheckColor : this.Normal.CheckColor;
+            g.FillRectangle(b, new Rectangle(r.X + 2, r.Y + 2, r.Width - 4, r.Height - 4));
         }
         #endregion
     }

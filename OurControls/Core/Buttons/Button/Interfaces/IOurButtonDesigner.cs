@@ -25,19 +25,19 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Interfaces
     public interface IOurButtonDesigner
     {
         #region Properties
-        Color BackColor { get; set; }
-
-        Color BorderColor { get; set; }
-
-        string Text { get; set; }
-
-        Color TextColor { get; set; }
-
         bool UseBorderColor { get; set; }
 
         bool UseText { get; set; }
 
         bool UseTextColor { get; set; }
+
+        Color BackColor { get; set; }
+
+        Color BorderColor { get; set; }
+
+        Color TextColor { get; set; }
+
+        string Text { get; set; }
         #endregion
     }
 }

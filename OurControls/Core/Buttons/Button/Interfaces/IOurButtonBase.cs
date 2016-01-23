@@ -27,16 +27,17 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Interfaces
     public interface IOurButtonBase
     {
         #region Properties
-        IOurButtonDesigner Clicked { get; }
-
-        IOurButtonDesigner Disabled { get; }
-
-        IOurButtonDesigner Hovered { get; }
         bool IsInDesignerMode { get; }
+
+        OurOrientation Orientation { get; set; }
 
         IOurButtonDesigner Normal { get; }
 
-        OurOrientation Orientation { get; set; }
+        IOurButtonDesigner Hovered { get; }
+
+        IOurButtonDesigner Clicked { get; }
+
+        IOurButtonDesigner Disabled { get; }
         #endregion
 
         #region Methods

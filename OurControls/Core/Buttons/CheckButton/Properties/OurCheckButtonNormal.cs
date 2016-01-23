@@ -27,20 +27,71 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
         #region Fields
         private readonly OurCheckButtonBase _checkButtonBase;
 
-        private Color _backColor = Color.FromArgb(255, 75, 75, 75);
-        private Color _borderColor = Color.FromArgb(255, 25, 25, 25);
-        private Color _checkBackColor = Color.FromArgb(255, 65, 65, 65);
-        private Color _checkColor = Color.Blue;
-
-        private string _text;
-        private Color _textColor = Color.FromArgb(255, 150, 150, 150);
-
         private bool _useBackColor;
         private bool _useBorderColor = true;
         private bool _useCheckBackColor;
+
+        private Color _backColor = Color.FromArgb(255, 75, 75, 75);
+        private Color _borderColor = Color.FromArgb(255, 25, 25, 25);
+        private Color _checkColor = Color.Blue;
+        private Color _checkBackColor = Color.FromArgb(255, 65, 65, 65);
+        private Color _textColor = Color.FromArgb(255, 150, 150, 150);
+
+        private string _text;
         #endregion
 
         #region Properties
+        [DefaultValue(false)]
+        [Description("Override the BackColor and use it?")]
+        public bool UseBackColor
+        {
+            get { return this._useBackColor; }
+            set
+            {
+                this._useBackColor = value;
+                if (value && !this._checkButtonBase.Enabled) { this._checkButtonBase.BackColor = this.BackColor; }
+            }
+        }
+
+        [DefaultValue(true)]
+        [Description("Use a color for the border if one?")]
+        public bool UseBorderColor
+        {
+            get { return this._useBorderColor; }
+            set
+            {
+                this._useBorderColor = value;
+                if (value && this._checkButtonBase.Enabled) { this._checkButtonBase.Invalidate(); }
+            }
+        }
+
+        [Browsable(false)]
+        [DefaultValue(true)]
+        [Description("Use Color for the Check?")]
+        public bool UseCheckColor { get { return true; } set { } }
+
+        [DefaultValue(true)]
+        [Description("Use the BackColor for the CheckBox?")]
+        public bool UseCheckBackColor
+        {
+            get { return this._useCheckBackColor; }
+            set
+            {
+                this._useCheckBackColor = value;
+                if (value && this._checkButtonBase.Enabled) { this._checkButtonBase.Invalidate(); }
+            }
+        }
+
+        [Browsable(false)]
+        [DefaultValue(true)]
+        [Description("Use this Text Color?")]
+        public bool UseTextColor { get { return true; } set { } }
+
+        [Browsable(false)]
+        [DefaultValue(false)]
+        [Description("Use this text?")]
+        public bool UseText { get { return true; } set { } }
+
         [DefaultValue(typeof(Color), "255, 75, 75, 75")]
         [Description("BackColor of the whole ChecBox.")]
         public Color BackColor
@@ -67,19 +118,6 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             }
         }
 
-        [DefaultValue(typeof(Color), "255, 65, 65, 65")]
-        [Description("Color of the background where the check is.")]
-        public Color CheckBackColor
-        {
-            get { return this._checkBackColor; }
-            set
-            {
-                this._checkBackColor = value;
-                if (this.UseCheckBackColor
-                    && this._checkButtonBase.Enabled) { this._checkButtonBase.Invalidate(); }
-            }
-        }
-
         [DefaultValue(typeof(Color), "Blue")]
         [Description("Color of the check.")]
         public Color CheckColor
@@ -94,18 +132,16 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             }
         }
 
-        [Description("The Text on the CheckButton.")]
-        public string Text
+        [DefaultValue(typeof(Color), "255, 65, 65, 65")]
+        [Description("Color of the background where the check is.")]
+        public Color CheckBackColor
         {
-            get { return this._text; }
+            get { return this._checkBackColor; }
             set
             {
-                this._text = value;
-
-                if (this._checkButtonBase.IsInDesignerMode) { this._checkButtonBase.UpdateMinimumSize(); }
-
-                if (this.UseText
-                    && this._checkButtonBase.Enabled) { this._checkButtonBase.Text = value; }
+                this._checkBackColor = value;
+                if (this.UseCheckBackColor
+                    && this._checkButtonBase.Enabled) { this._checkButtonBase.Invalidate(); }
             }
         }
 
@@ -123,56 +159,20 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             }
         }
 
-        [DefaultValue(false)]
-        [Description("Override the BackColor and use it?")]
-        public bool UseBackColor
+        [Description("The Text on the CheckButton.")]
+        public string Text
         {
-            get { return this._useBackColor; }
+            get { return this._text; }
             set
             {
-                this._useBackColor = value;
-                if (value && !this._checkButtonBase.Enabled) { this._checkButtonBase.BackColor = this.BackColor; }
+                this._text = value;
+
+                if (this._checkButtonBase.IsInDesignerMode) { this._checkButtonBase.UpdateMinimumSize(); }
+
+                if (this.UseText
+                    && this._checkButtonBase.Enabled) { this._checkButtonBase.Text = value; }
             }
         }
-
-        [DefaultValue(true)]
-        [Description("Use a color for the border if one?")]
-        public bool UseBorderColor
-        {
-            get { return this._useBorderColor; }
-            set
-            {
-                this._useBorderColor = value;
-                if (value && this._checkButtonBase.Enabled) { this._checkButtonBase.Invalidate(); }
-            }
-        }
-
-        [DefaultValue(true)]
-        [Description("Use the BackColor for the CheckBox?")]
-        public bool UseCheckBackColor
-        {
-            get { return this._useCheckBackColor; }
-            set
-            {
-                this._useCheckBackColor = value;
-                if (value && this._checkButtonBase.Enabled) { this._checkButtonBase.Invalidate(); }
-            }
-        }
-
-        [Browsable(false)]
-        [DefaultValue(true)]
-        [Description("Use Color for the Check?")]
-        public bool UseCheckColor { get { return true; } set { } }
-
-        [Browsable(false)]
-        [DefaultValue(false)]
-        [Description("Use this text?")]
-        public bool UseText { get { return true; } set { } }
-
-        [Browsable(false)]
-        [DefaultValue(true)]
-        [Description("Use this Text Color?")]
-        public bool UseTextColor { get { return true; } set { } }
         #endregion
 
         #region Constructors

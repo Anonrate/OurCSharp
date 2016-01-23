@@ -21,28 +21,29 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Interfaces
     public interface IOurCheckButtonDesigner
     {
         #region Properties
-        Color BackColor { get; set; }
-
-        Color BorderColor { get; set; }
-
-        Color CheckBackColor { get; set; }
-
-        Color CheckColor { get; set; }
-
-        string Text { get; set; }
-
-        Color TextColor { get; set; }
         bool UseBackColor { get; set; }
 
         bool UseBorderColor { get; set; }
 
-        bool UseCheckBackColor { get; set; }
-
         bool UseCheckColor { get; set; }
+
+        bool UseCheckBackColor { get; set; }
 
         bool UseText { get; set; }
 
         bool UseTextColor { get; set; }
+
+        Color BackColor { get; set; }
+
+        Color BorderColor { get; set; }
+
+        Color CheckColor { get; set; }
+
+        Color CheckBackColor { get; set; }
+
+        Color TextColor { get; set; }
+
+        string Text { get; set; }
         #endregion
     }
 }

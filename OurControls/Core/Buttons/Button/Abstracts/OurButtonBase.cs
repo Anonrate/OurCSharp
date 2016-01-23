@@ -82,23 +82,11 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Abstracts
         [Description("This cannot be changed for rendering and visual appearance reasons.")]
         protected override bool DoubleBuffered { get { return base.DoubleBuffered; } set { } }
 
-        [Category("OurButton")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IOurButtonDesigner Clicked { get; }
-
-        [Category("OurButton")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IOurButtonDesigner Disabled { get; }
-
-        [Category("OurButton")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IOurButtonDesigner Hovered { get; }
+        [DefaultValue(typeof(Padding), "6, 2, 6, 2")]
+        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Needs to be visable in Designer.")]
+        public new Padding Padding { get { return base.Padding; } set { base.Padding = value; } }
 
         public bool IsInDesignerMode => this.DesignMode;
-
-        [Category("OurButton")]
-        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public IOurButtonDesigner Normal { get; }
 
         [Category("OurButton")]
         [DefaultValue(typeof(OurOrientation), "Horizontal")]
@@ -114,9 +102,21 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Abstracts
             }
         }
 
-        [DefaultValue(typeof(Padding), "6, 2, 6, 2")]
-        [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Needs to be visable in Designer.")]
-        public new Padding Padding { get { return base.Padding; } set { base.Padding = value; } }
+        [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurButtonDesigner Normal { get; }
+
+        [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurButtonDesigner Hovered { get; }
+
+        [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurButtonDesigner Clicked { get; }
+
+        [Category("OurButton")]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public IOurButtonDesigner Disabled { get; }
 
         protected IOurButtonDesigner OurDesigner { get; private set; }
         #endregion
@@ -139,8 +139,6 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Abstracts
         #endregion
 
         #region Methods
-        public void UpdateMinimumSize() { this.MinimumSize = this.UpdateAndGetMinimumSize(); }
-
         protected override void OnCreateControl()
         {
             this.Text = this.Normal.Text = this.Hovered.Text = this.Clicked.Text = this.Disabled.Text = this.Name;
@@ -196,6 +194,8 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Abstracts
 
             this.UpdateColor();
         }
+
+        public void UpdateMinimumSize() { this.MinimumSize = this.UpdateAndGetMinimumSize(); }
 
         private Size UpdateAndGetMinimumSize()
         {

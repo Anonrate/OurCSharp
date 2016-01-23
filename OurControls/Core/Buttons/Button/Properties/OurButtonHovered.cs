@@ -27,32 +27,12 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Properties
         #region Fields
         private readonly OurButtonBase _buttonBase;
 
-        private string _text;
-
         private bool _useText;
+
+        private string _text;
         #endregion
 
         #region Properties
-        [Description("The background color of OurButton.")]
-        public Color BackColor { get; set; } = Color.FromArgb(255, 70, 70, 70);
-
-        [Description("The color of the Border on OurButton.")]
-        public Color BorderColor { get; set; } = Color.FromArgb(255, 25, 25, 25);
-
-        [Description("The Text displayed on OurButton.")]
-        public string Text
-        {
-            get { return this._text; }
-            set
-            {
-                this._text = value;
-                if (this._buttonBase.IsInDesignerMode) { this._buttonBase.UpdateMinimumSize(); }
-            }
-        }
-
-        [Description("The color of the Text on OurButton.")]
-        public Color TextColor { get; set; } = Color.FromArgb(255, 150, 150, 150);
-
         [Description("Should we use the BorderColor given here when OurButton is in the corresponding state?")]
         public bool UseBorderColor { get; set; } = false;
 
@@ -70,6 +50,26 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Properties
 
         [Description("Should we use the TextColor given here when OurButton is in the corresponding state?")]
         public bool UseTextColor { get; set; } = false;
+
+        [Description("The background color of OurButton.")]
+        public Color BackColor { get; set; } = Color.FromArgb(255, 70, 70, 70);
+
+        [Description("The color of the Border on OurButton.")]
+        public Color BorderColor { get; set; } = Color.FromArgb(255, 25, 25, 25);
+
+        [Description("The color of the Text on OurButton.")]
+        public Color TextColor { get; set; } = Color.FromArgb(255, 150, 150, 150);
+
+        [Description("The Text displayed on OurButton.")]
+        public string Text
+        {
+            get { return this._text; }
+            set
+            {
+                this._text = value;
+                if (this._buttonBase.IsInDesignerMode) { this._buttonBase.UpdateMinimumSize(); }
+            }
+        }
         #endregion
 
         #region Constructors
