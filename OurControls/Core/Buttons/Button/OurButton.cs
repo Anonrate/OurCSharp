@@ -60,8 +60,7 @@ namespace OurCSharp.OurControls.Core.Buttons.Button
                                {
                                    Alignment = StringAlignment.Center
                                }
-                             : new StringFormat(StringFormatFlags.DirectionVertical
-                                                | StringFormatFlags.DirectionRightToLeft)
+                             : new StringFormat(StringFormatFlags.DirectionVertical | StringFormatFlags.DirectionRightToLeft)
                                {
                                    LineAlignment = StringAlignment.Center
                                });

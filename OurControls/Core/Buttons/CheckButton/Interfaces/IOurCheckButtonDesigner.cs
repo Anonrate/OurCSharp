@@ -16,8 +16,10 @@
 
 namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Interfaces
 {
+    using System.ComponentModel;
     using System.Drawing;
 
+    [TypeConverter(typeof(ExpandableObjectConverter))]
     public interface IOurCheckButtonDesigner
     {
         #region Properties
@@ -26,6 +28,10 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Interfaces
         bool UseBorderColor { get; set; }
 
         bool UseCheckColor { get; set; }
+
+        bool UseCheckBorder { get; set; }
+
+        bool UseCheckBorderColor { get; set; }
 
         bool UseCheckBackColor { get; set; }
 
@@ -38,6 +44,8 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Interfaces
         Color BorderColor { get; set; }
 
         Color CheckColor { get; set; }
+
+        Color CheckBorderColor { get; set; }
 
         Color CheckBackColor { get; set; }
 

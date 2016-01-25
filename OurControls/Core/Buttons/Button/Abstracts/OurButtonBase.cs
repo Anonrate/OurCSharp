@@ -61,9 +61,8 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Abstracts
             get { return base.MinimumSize; }
             set
             {
-                base.MinimumSize = new Size(
-                    value.Width <= base.MinimumSize.Width ? base.MinimumSize.Width : value.Width,
-                    value.Height <= base.MinimumSize.Height ? base.MinimumSize.Height : value.Height);
+                base.MinimumSize = new Size(value.Width <= base.MinimumSize.Width ? base.MinimumSize.Width : value.Width,
+                                            value.Height <= base.MinimumSize.Height ? base.MinimumSize.Height : value.Height);
             }
         }
 

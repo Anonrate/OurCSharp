@@ -42,10 +42,15 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
         [Description("Use Color for the Check?")]
         public bool UseCheckColor { get; set; } = false;
 
+        [Description("Use a border on the Check?")]
+        public bool UseCheckBorder { get; set; } = true;
+
+        [Description("Use the color on the border for the check?")]
+        public bool UseCheckBorderColor { get; set; } = true;
+
         [Description("Use the BackColor for the CheckBox?")]
         public bool UseCheckBackColor { get; set; } = true;
 
-        [Browsable(false)]
         [DefaultValue(false)]
         [Description("Use this text?")]
         public bool UseText
@@ -54,12 +59,14 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             set
             {
                 this._useText = value;
-                if (this._checkButtonBase.IsInDesignerMode) { this._checkButtonBase.UpdateMinimumSize(); }
+                if (!this._checkButtonBase.IsInDesignerMode) { return; }
+                this._checkButtonBase.UpdateMinimumSize();
+                this._checkButtonBase.UpdateSize();
             }
         }
 
         [Description("Use this Text Color?")]
-        public bool UseTextColor { get; set; } = false;
+        public bool UseTextColor { get; set; } = true;
 
         [Description("BackColor of the whole ChecBox.")]
         public Color BackColor { get; set; } = Color.FromArgb(255, 75, 75, 75);
@@ -70,11 +77,14 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
         [Description("Color of the check.")]
         public Color CheckColor { get; set; } = Color.Blue;
 
+        [Description("Color of the border of the check.")]
+        public Color CheckBorderColor { get; set; } = Color.FromArgb(255, 50, 50, 50);
+
         [Description("Color of the background where the check is.")]
-        public Color CheckBackColor { get; set; } = Color.FromArgb(255, 60, 60, 60);
+        public Color CheckBackColor { get; set; } = Color.FromArgb(255, 50, 50, 50);
 
         [Description("Color of the text.")]
-        public Color TextColor { get; set; } = Color.FromArgb(255, 150, 150, 150);
+        public Color TextColor { get; set; } = Color.FromArgb(255, 100, 100, 100);
 
         [Description("The Text on the CheckButton.")]
         public string Text
@@ -84,7 +94,9 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             {
                 this._text = value;
 
-                if (this._checkButtonBase.IsInDesignerMode) { this._checkButtonBase.UpdateMinimumSize(); }
+                if (!this._checkButtonBase.IsInDesignerMode) { return; }
+                this._checkButtonBase.UpdateMinimumSize();
+                this._checkButtonBase.UpdateSize();
             }
         }
         #endregion

@@ -36,27 +36,27 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton
 
             var b = new SolidBrush(this.ForeColor);
 
-            var textSizeF = this.CreateGraphics().MeasureString(this.Text, this.Font);
+            var r = this.Orientation == OurOrientation.Horizontal
+                        ? new Rectangle(0, 0, this.Height - 1, this.Height - 1)
+                        : new Rectangle(0, this.Height - this.Width - 1, this.Width - 1, this.Width - 1);
 
             g.DrawString(this.Text,
                          this.Font,
                          b,
                          this.Orientation == OurOrientation.Horizontal
-                             ? new PointF(this.Height + 3, this.Height / 2 + textSizeF.Height / 2)
-                             : new PointF(this.Width / 2 - textSizeF.Height / 2, this.Width - 4),
+                             ? new Rectangle(this.Height + 2, 0, this.Width - 1 - this.Height - 2, this.Height - 1)
+                             : new Rectangle(0, 0, this.Width - 1, this.Height - 1 - this.Width - 2),
                          this.Orientation == OurOrientation.Horizontal
                              ? new StringFormat
                                {
+                                   ////Alignment = StringAlignment.Center,
                                    LineAlignment = StringAlignment.Center
                                }
                              : new StringFormat(StringFormatFlags.DirectionVertical)
                                {
-                                   LineAlignment = StringAlignment.Center
+                                   Alignment = StringAlignment.Center,
+                                   ////LineAlignment = StringAlignment.Center
                                });
-
-            var r = this.Orientation == OurOrientation.Horizontal
-                        ? new Rectangle(1, 1, this.Height - 1, this.Height - 1)
-                        : new Rectangle(1, this.Height - this.Width - 3, this.Width - 1, this.Width - 1);
 
             if (this.OurDesigner.UseCheckBackColor)
             {
@@ -69,8 +69,17 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton
             g.DrawRectangle(p, r);
 
             if (!this.Checked) { return; }
+
             b.Color = this.OurDesigner.UseCheckColor ? this.OurDesigner.CheckColor : this.Normal.CheckColor;
-            g.FillRectangle(b, new Rectangle(r.X + 2, r.Y + 2, r.Width - 4, r.Height - 4));
+            g.FillRectangle(b, r = new Rectangle(r.X + 2, r.Y + 2, r.Width - 4, r.Height - 4));
+
+            if (!this.OurDesigner.UseCheckBorder
+                && !this.Normal.UseCheckBorder) {
+                    return;
+                }
+
+            p.Color = this.OurDesigner.UseCheckBorderColor ? this.OurDesigner.CheckBorderColor : this.Normal.CheckBorderColor;
+            g.DrawRectangle(p, r);
         }
         #endregion
     }

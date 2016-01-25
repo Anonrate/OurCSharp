@@ -28,12 +28,14 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
         private readonly OurCheckButtonBase _checkButtonBase;
 
         private bool _useBackColor;
-        private bool _useBorderColor = true;
-        private bool _useCheckBackColor;
+        private bool _useCheckBorder = true;
+        private bool _useCheckBorderColor = true;
+        private bool _useCheckBackColor = true;
 
         private Color _backColor = Color.FromArgb(255, 75, 75, 75);
         private Color _borderColor = Color.FromArgb(255, 25, 25, 25);
         private Color _checkColor = Color.Blue;
+        private Color _checkBorderColor = Color.FromArgb(255, 65, 65, 65);
         private Color _checkBackColor = Color.FromArgb(255, 65, 65, 65);
         private Color _textColor = Color.FromArgb(255, 150, 150, 150);
 
@@ -53,22 +55,42 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             }
         }
 
+        [Browsable(false)]
         [DefaultValue(true)]
         [Description("Use a color for the border if one?")]
-        public bool UseBorderColor
-        {
-            get { return this._useBorderColor; }
-            set
-            {
-                this._useBorderColor = value;
-                if (value && this._checkButtonBase.Enabled) { this._checkButtonBase.Invalidate(); }
-            }
-        }
+        public bool UseBorderColor { get { return true; } set { } }
 
         [Browsable(false)]
         [DefaultValue(true)]
         [Description("Use Color for the Check?")]
         public bool UseCheckColor { get { return true; } set { } }
+
+        [DefaultValue(true)]
+        [Description("Use a border on the Check?")]
+        public bool UseCheckBorder
+        {
+            get { return this._useCheckBorder; }
+            set
+            {
+                this._useCheckBorder = value;
+                if (this._checkButtonBase.Enabled
+                    && this._checkButtonBase.Checked) { this._checkButtonBase.Invalidate(); }
+            }
+        }
+
+        [DefaultValue(true)]
+        [Description("Use the color on the border for the check?")]
+        public bool UseCheckBorderColor
+        {
+            get { return this._useCheckBorderColor; }
+            set
+            {
+                this._useCheckBorderColor = value;
+                if (this._useCheckBorder
+                    && this._checkButtonBase.Enabled
+                    && this._checkButtonBase.Checked) { this._checkButtonBase.Invalidate(); }
+            }
+        }
 
         [DefaultValue(true)]
         [Description("Use the BackColor for the CheckBox?")]
@@ -88,7 +110,7 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
         public bool UseTextColor { get { return true; } set { } }
 
         [Browsable(false)]
-        [DefaultValue(false)]
+        [DefaultValue(true)]
         [Description("Use this text?")]
         public bool UseText { get { return true; } set { } }
 
@@ -113,8 +135,7 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             set
             {
                 this._borderColor = value;
-                if (this.UseBorderColor
-                    && this._checkButtonBase.Enabled) { this._checkButtonBase.Invalidate(); }
+                if (this._checkButtonBase.Enabled) { this._checkButtonBase.Invalidate(); }
             }
         }
 
@@ -126,7 +147,20 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             set
             {
                 this._checkColor = value;
-                if (this.UseCheckColor
+                if (this._checkButtonBase.Enabled
+                    && this._checkButtonBase.Checked) { this._checkButtonBase.Invalidate(); }
+            }
+        }
+
+        [DefaultValue(typeof(Color), "255, 65, 65, 65")]
+        [Description("Color of the border on the Check.")]
+        public Color CheckBorderColor
+        {
+            get { return this._checkBorderColor; }
+            set
+            {
+                this._checkBorderColor = value;
+                if (this._useCheckBorder
                     && this._checkButtonBase.Enabled
                     && this._checkButtonBase.Checked) { this._checkButtonBase.Invalidate(); }
             }
@@ -154,8 +188,7 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             {
                 this._textColor = value;
 
-                if (this.UseTextColor
-                    && this._checkButtonBase.Enabled) { this._checkButtonBase.ForeColor = value; }
+                if (this._checkButtonBase.Enabled) { this._checkButtonBase.ForeColor = value; }
             }
         }
 
@@ -167,10 +200,13 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             {
                 this._text = value;
 
-                if (this._checkButtonBase.IsInDesignerMode) { this._checkButtonBase.UpdateMinimumSize(); }
+                if (this._checkButtonBase.IsInDesignerMode)
+                {
+                    this._checkButtonBase.UpdateMinimumSize();
+                    this._checkButtonBase.UpdateSize();
+                }
 
-                if (this.UseText
-                    && this._checkButtonBase.Enabled) { this._checkButtonBase.Text = value; }
+                if (this._checkButtonBase.Enabled) { this._checkButtonBase.Text = value; }
             }
         }
         #endregion

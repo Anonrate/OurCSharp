@@ -87,11 +87,7 @@ namespace OurCSharp.OurControls.Core.Buttons.Button.Properties
 
         [DefaultValue(typeof(Color), "255, 150, 150, 150")]
         [Description("The color of the Text on OurButton.")]
-        public Color TextColor
-        {
-            get { return this._textColor; }
-            set { this._buttonBase.ForeColor = this._textColor = value; }
-        }
+        public Color TextColor { get { return this._textColor; } set { this._buttonBase.ForeColor = this._textColor = value; } }
 
         [Description("The Text displayed on OurButton.")]
         public string Text

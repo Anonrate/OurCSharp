@@ -42,10 +42,15 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
         [Description("Use the BackColor for the CheckBox?")]
         public bool UseCheckBackColor { get; set; } = true;
 
+        [Description("Use a border on the Check?")]
+        public bool UseCheckBorder { get; set; } = true;
+
+        [Description("Use the color on the border for the check?")]
+        public bool UseCheckBorderColor { get; set; } = true;
+
         [Description("Use Color for the Check?")]
         public bool UseCheckColor { get; set; } = false;
 
-        [Browsable(false)]
         [DefaultValue(false)]
         [Description("Use this text?")]
         public bool UseText
@@ -54,7 +59,9 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             set
             {
                 this._useText = value;
-                if (this._checkButtonBase.IsInDesignerMode) { this._checkButtonBase.UpdateMinimumSize(); }
+                if (!this._checkButtonBase.IsInDesignerMode) { return; }
+                this._checkButtonBase.UpdateMinimumSize();
+                this._checkButtonBase.UpdateSize();
             }
         }
 
@@ -70,6 +77,9 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
         [Description("Color of the check.")]
         public Color CheckColor { get; set; } = Color.Blue;
 
+        [Description("Color of the border of the check.")]
+        public Color CheckBorderColor { get; set; } = Color.FromArgb(255, 70, 70, 70);
+
         [Description("Color of the background where the check is.")]
         public Color CheckBackColor { get; set; } = Color.FromArgb(255, 70, 70, 70);
 
@@ -84,7 +94,9 @@ namespace OurCSharp.OurControls.Core.Buttons.CheckButton.Properties
             {
                 this._text = value;
 
-                if (this._checkButtonBase.IsInDesignerMode) { this._checkButtonBase.UpdateMinimumSize(); }
+                if (!this._checkButtonBase.IsInDesignerMode) { return; }
+                this._checkButtonBase.UpdateMinimumSize();
+                this._checkButtonBase.UpdateSize();
             }
         }
         #endregion
